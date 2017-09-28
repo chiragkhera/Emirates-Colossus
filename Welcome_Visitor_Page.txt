@@ -1,0 +1,252 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class Welcome_Visitor_Page {
+	public void Welcome_Page() {
+		final JFrame emirates_wel_visitor = new JFrame();
+
+		emirates_wel_visitor.setTitle("Emirates Colossus: Welcome to Visitors Panel- Dubai International");
+		
+		JLabel img1 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/air_traffic.jpg"));
+		img1.setSize(1920, 1080);
+		img1.setBounds(0, 0, 1920, 1080);
+		img1.setLayout(new FlowLayout());
+		
+		JLabel logo = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/emirates_holo.gif"));
+		logo.setSize(200, 137);
+		logo.setBounds(1650, 850, 200, 137);
+		logo.setLayout(new FlowLayout());
+
+		JPanel upper_panel = new JPanel();
+		upper_panel.setSize(1865, 250);
+		upper_panel.setBounds(20, 20, 1865, 250);
+		upper_panel.setBackground(new Color(0, 0, 0, 50));
+
+		JLabel head1 = new JLabel("Welcome to Emirates Colossus");
+		head1.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 100));
+		head1.setBounds(150, 40, 1700, 90);
+		head1.setForeground(Color.WHITE);
+
+		JLabel tag = new JLabel("Hello Tomorrow");
+		tag.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 50));
+		tag.setBounds(720, 150, 900, 90);
+		tag.setForeground(Color.WHITE);
+
+		JPanel lower_panel = new JPanel();
+		lower_panel.setSize(1865, 680);
+		lower_panel.setBounds(20, 320, 1865, 680);
+		lower_panel.setBackground(new Color(0, 0, 0, 50));
+
+		JLabel task = new JLabel("Choose Your Task:");
+		task.setFont(new Font("Sansation Regular", Font.BOLD, 32));
+		task.setForeground(Color.DARK_GRAY);
+		task.setSize(280, 32);
+		task.setBounds(800, 278, 280, 32);
+
+		JButton schedule = new JButton("Flight Scheduling");
+		JButton seat = new JButton("Reserve Your Seat(s)");
+		JButton track = new JButton("Track Your Flight");
+		JButton pass = new JButton("Generate Your Boarding Pass");
+		JButton meal = new JButton("Book Your Flight Meal");
+		JButton transit = new JButton("Transit Passenger?");
+		JButton runway = new JButton("Watch Our Live Runways");
+		JButton help = new JButton("Help");
+		JButton logout = new JButton("Logout");
+
+		schedule.setSize(350, 40);
+		schedule.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		schedule.setForeground(Color.DARK_GRAY);
+		schedule.setBounds(755, 350, 350, 40);
+		schedule.setBackground(Color.WHITE);
+		schedule.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+
+		seat.setSize(350, 40);
+		seat.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		seat.setForeground(Color.DARK_GRAY);
+		seat.setBounds(755, 415, 350, 40);
+		seat.setBackground(Color.WHITE);
+		seat.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+
+		track.setSize(350, 40);
+		track.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		track.setForeground(Color.DARK_GRAY);
+		track.setBounds(755, 480, 350, 40);
+		track.setBackground(Color.WHITE);
+		track.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+
+		pass.setBackground(Color.WHITE);
+		pass.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		pass.setSize(350, 40);
+		pass.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		pass.setForeground(Color.DARK_GRAY);
+		pass.setBounds(755, 545, 350, 40);
+
+		meal.setBackground(Color.WHITE);
+		meal.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		meal.setSize(350, 40);
+		meal.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		meal.setForeground(Color.DARK_GRAY);
+		meal.setBounds(755, 610, 350, 40);
+
+		transit.setBackground(Color.WHITE);
+		transit.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		transit.setSize(350, 40);
+		transit.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		transit.setForeground(Color.DARK_GRAY);
+		transit.setBounds(755, 675, 350, 40);
+
+		runway.setBackground(Color.WHITE);
+		runway.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		runway.setSize(350, 40);
+		runway.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		runway.setForeground(Color.DARK_GRAY);
+		runway.setBounds(755, 740, 350, 40);
+
+		help.setBackground(Color.WHITE);
+		help.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		help.setSize(350, 40);
+		help.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		help.setForeground(Color.DARK_GRAY);
+		help.setBounds(755, 805, 350, 40);
+
+		logout.setBackground(Color.WHITE);
+		logout.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		logout.setSize(350, 40);
+		logout.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		logout.setForeground(Color.DARK_GRAY);
+		logout.setBounds(755, 870, 350, 40);
+
+		schedule.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				emirates_wel_visitor.dispose();
+				Flight_Schedules flsc = new Flight_Schedules();
+				flsc.schedules();
+			}
+		});
+		seat.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_wel_visitor.dispose();
+				Manage_Seats mng_seat = new Manage_Seats();
+				mng_seat.emirates_seat();
+			}
+		});
+		track.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_wel_visitor.dispose();
+				Track_Flights tf = new Track_Flights();
+				tf.emi_tracker();
+			}
+		});
+		pass.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_wel_visitor.dispose();
+				Generate_Boarding_Pass gbp = new Generate_Boarding_Pass();
+				gbp.boarding_pass();
+			}
+		});
+		meal.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_wel_visitor.dispose();
+				Flight_Meal meal = new Flight_Meal();
+				meal.pantry();
+			}
+		});
+		transit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_wel_visitor.dispose();
+				Transit_Passenger tp = new Transit_Passenger();
+				tp.transit();
+			}
+		});
+		runway.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_wel_visitor.dispose();
+				Runway_Video rv = new Runway_Video();
+				rv.emirates_live();
+			}
+		});
+		help.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_wel_visitor.dispose();
+				Help help = new Help();
+				help.emirates_help();
+			}
+		});
+		logout.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_wel_visitor.dispose();
+				Login_Page lp = new Login_Page();
+				lp.login_emirates();
+				JOptionPane
+				.showMessageDialog(
+						null,
+						"You have successfully logged out of Emirates Visitor Panel!",
+						"Successful Logout",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		emirates_wel_visitor.add(logout);
+		emirates_wel_visitor.add(help);
+		emirates_wel_visitor.add(runway);
+		emirates_wel_visitor.add(transit);
+		emirates_wel_visitor.add(meal);
+		emirates_wel_visitor.add(pass);
+		emirates_wel_visitor.add(track);
+		emirates_wel_visitor.add(seat);
+		emirates_wel_visitor.add(schedule);
+		emirates_wel_visitor.add(lower_panel);
+		emirates_wel_visitor.add(task);
+		emirates_wel_visitor.add(head1);
+		emirates_wel_visitor.add(tag);
+		emirates_wel_visitor.add(upper_panel);
+		emirates_wel_visitor.add(logo);
+		emirates_wel_visitor.add(img1);
+		emirates_wel_visitor.setSize(1920, 1080);
+		emirates_wel_visitor.setLayout(new BorderLayout());
+		emirates_wel_visitor.setVisible(true);
+
+	}
+
+}

@@ -1,0 +1,136 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
+public class Update_Dep_Status {
+public void new_dep_status(){
+	final JFrame frameK=new JFrame();
+	frameK.setSize(711, 400);
+	frameK.setTitle("Emirates Colossus: Admin: Update Flight Departure Status- Dubai International");
+	frameK.setLocationRelativeTo(null);
+	frameK.setVisible(true);
+	
+	JLabel pic11=new JLabel(new ImageIcon("D:/Users/ckhera/Desktop/Emirates/update.jpg"));
+	pic11.setSize(711, 400);
+	pic11.setBounds(0, 0, 711, 400);
+	pic11.setLayout(new FlowLayout());
+	
+	JLabel flight_no=new JLabel("Enter Flight Number:");
+	flight_no.setSize(350, 30);
+	flight_no.setForeground(Color.WHITE);
+	flight_no.setBounds(25, 30, 350, 30);
+	flight_no.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	final JTextField flight_no_select=new JTextField("");
+	flight_no_select.setSize(300, 30);  
+	flight_no_select.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	flight_no_select.setForeground(Color.BLACK);
+	flight_no_select.setBounds(25, 65, 300, 30);
+	
+	JLabel new_fl_status=new JLabel("Enter New Flight Departure Status:");
+	new_fl_status.setSize(550, 30);
+	new_fl_status.setForeground(Color.WHITE);
+	new_fl_status.setBounds(25, 135, 550, 30);
+	new_fl_status.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	final JTextField new_dep_status=new JTextField("");
+	new_dep_status.setSize(400, 30);  
+	new_dep_status.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	new_dep_status.setForeground(Color.BLACK);
+	new_dep_status.setBounds(25, 170, 400, 30);
+	
+	JButton update=new JButton("Update");
+	update.setSize(250, 30);  
+	update.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	update.setForeground(Color.DARK_GRAY);
+	update.setBackground(Color.WHITE);
+	update.setBounds(50, 300, 250, 30);
+	
+	JButton close=new JButton("Close");
+	close.setSize(250, 30);  
+	close.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	close.setForeground(Color.DARK_GRAY);
+	close.setBackground(Color.WHITE);
+	close.setBounds(411, 300, 250, 30);
+	
+	update.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		String flight_number=flight_no_select.getText();	
+		String new_dep_status_select=new_dep_status.getText();
+		if ("".equals(flight_number)){
+			JOptionPane.showMessageDialog(null, "Please enter the flight number to update its Departure Status.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+			}
+		else if("".equals(new_dep_status_select)){
+			JOptionPane.showMessageDialog(null, "Please enter the new Departure Status to be updated.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+		}
+		else if("".equals(flight_number) && "".equals(new_dep_status_select)){
+		JOptionPane.showMessageDialog(null, "Mandatory fields cannot be left blank.", "Error in Updation", JOptionPane.ERROR_MESSAGE);	
+		}
+		else{
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID="root";
+		String PWD="root";
+		String Comp_DB_URL="jdbc:mysql://localhost/emirates?user="+UID+"&password="+PWD;
+	 	try{
+				Connection conn=DriverManager.getConnection(Comp_DB_URL);
+				Statement stmt=conn.createStatement();
+				String sql, sql1;
+				sql="Update arr set status='"+new_dep_status_select+"' where flight_no='"+flight_number+"';";
+				sql1="Update transit set connect_status='"+new_dep_status_select+"' where flight_no='"+flight_number+"';";
+				int rs=stmt.executeUpdate(sql);
+				int rs1=stmt.executeUpdate(sql1);
+				stmt.close();
+				conn.close();
+				JOptionPane.showMessageDialog(null, "Departure Status: '"+new_dep_status_select+"' has been succesfully updated where flight number was '"+flight_number+"'. \nThe relevant changes has been made to the Emirates database!", "Successful Updation", JOptionPane.INFORMATION_MESSAGE);		
+				frameK.dispose();
+	 	}
+	 	catch (SQLException e1) {
+			
+			// TODO Auto-generated catch block
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error in connecting with Emirates!", "Error in Connectivity", JOptionPane.ERROR_MESSAGE);				
+		}
+		}
+		}
+	});
+	
+	close.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			frameK.dispose();
+		}
+	});
+	
+	frameK.add(close);
+	frameK.add(update);
+	frameK.add(new_dep_status);
+	frameK.add(new_fl_status);
+	frameK.add(flight_no_select);
+	frameK.add(flight_no);
+	frameK.add(pic11);
+}
+}

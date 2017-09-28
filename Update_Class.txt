@@ -1,0 +1,145 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
+public class Update_Class {
+public void new_class(){
+	final JFrame frameD=new JFrame();
+	frameD.setSize(711, 400);
+	frameD.setTitle("Emirates Colossus: Admin: Update Class- Dubai International");
+	frameD.setLocationRelativeTo(null);
+	frameD.setVisible(true);
+	
+	JLabel pic4=new JLabel(new ImageIcon("D:/Users/ckhera/Desktop/Emirates/update.jpg"));
+	pic4.setSize(711, 400);
+	pic4.setBounds(0, 0, 711, 400);
+	pic4.setLayout(new FlowLayout());
+	
+	JLabel existing_class=new JLabel("Enter Existing Class Name:");
+	existing_class.setSize(350, 30);
+	existing_class.setForeground(Color.WHITE);
+	existing_class.setBounds(25, 30, 350, 30);
+	existing_class.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	String[] old_class_select={"Select Class", "First", "Business", "Premium Economy", "Economy"};
+	final JComboBox old_combo_class=new JComboBox(old_class_select);
+	old_combo_class.setSize(270, 30);  
+	old_combo_class.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	old_combo_class.setForeground(Color.BLACK);
+	old_combo_class.setBounds(25, 65, 270, 30);
+	
+	JLabel new_class=new JLabel("Enter New Class Name:");
+	new_class.setSize(350, 30);
+	new_class.setForeground(Color.WHITE);
+	new_class.setBounds(25, 135, 350, 30);
+	new_class.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	String[] new_class_select={"Select Class", "First", "Business", "Premium Economy", "Economy"};
+	final JComboBox new_combo_class=new JComboBox(new_class_select);
+	new_combo_class.setSize(270, 30);  
+	new_combo_class.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	new_combo_class.setForeground(Color.BLACK);
+	new_combo_class.setBounds(25, 170, 270, 30);
+	
+	JButton update=new JButton("Update");
+	update.setSize(250, 30);  
+	update.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	update.setForeground(Color.DARK_GRAY);
+	update.setBackground(Color.WHITE);
+	update.setBounds(50, 300, 250, 30);
+	
+	JButton close=new JButton("Close");
+	close.setSize(250, 30);  
+	close.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	close.setForeground(Color.DARK_GRAY);
+	close.setBackground(Color.WHITE);
+	close.setBounds(411, 300, 250, 30);
+	
+	update.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String old_class=(String) old_combo_class.getSelectedItem();	
+			String new_class=(String) new_combo_class.getSelectedItem();
+			if(0==old_combo_class.getSelectedIndex()){
+			JOptionPane.showMessageDialog(null, "Please select an existing class to update it.", "Error in Updation", JOptionPane.ERROR_MESSAGE);	
+			}
+			else if(0==old_combo_class.getSelectedIndex() && 0==new_combo_class.getSelectedIndex()){
+				JOptionPane.showMessageDialog(null, "Mandatory fields cannot be left blank.", "Error in Updation", JOptionPane.ERROR_MESSAGE);	
+				}
+			else{
+			if(0==new_combo_class.getSelectedIndex()){
+			JOptionPane.showMessageDialog(null, "Please select a new class to be updated.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		else{
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID="root";
+		String PWD="root";
+		String Comp_DB_URL="jdbc:mysql://localhost/emirates?user="+UID+"&password="+PWD;
+	 	try{
+				Connection conn=DriverManager.getConnection(Comp_DB_URL);
+				Statement stmt=conn.createStatement();
+				String sql, sql1, sql2;
+				sql="Update boarding set class='"+new_combo_class+"' where class='"+old_combo_class+"';";
+				sql1="Update seat set class='"+new_combo_class+"' where class='"+old_combo_class+"';";
+				sql2="Update transit set connect_class='"+new_combo_class+"' where connect_class='"+old_combo_class+"';";
+				int rs=stmt.executeUpdate(sql);
+				int rs1=stmt.executeUpdate(sql1);
+				int rs2=stmt.executeUpdate(sql2);
+				stmt.close();
+				conn.close();
+				JOptionPane.showMessageDialog(null, "Class: '"+old_combo_class+"' has been succesfully updated to '"+new_combo_class+"'. \nThe relevant changes has been made to the Emirates database!", "Successful Updation", JOptionPane.INFORMATION_MESSAGE);		
+				frameD.dispose();
+	 	}
+	 	catch (SQLException e1) {
+			
+			// TODO Auto-generated catch block
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error in connecting with Emirates!", "Error in Connectivity", JOptionPane.ERROR_MESSAGE);				
+		}
+		}
+		}
+		}
+		});
+
+	close.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			frameD.dispose();
+		}
+	});
+
+	frameD.add(close);
+	frameD.add(update);
+	frameD.add(new_combo_class);
+	frameD.add(new_class);
+	frameD.add(old_combo_class);
+	frameD.add(existing_class);
+	frameD.add(pic4);
+	
+}
+}

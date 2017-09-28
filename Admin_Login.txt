@@ -1,0 +1,380 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class Admin_Login {
+	public void Admin() {
+
+		final JFrame emirates_admin_login = new JFrame();
+		emirates_admin_login.setSize(1920, 1080);
+		emirates_admin_login
+				.setTitle("Emirates Colossus: Admin- Dubai International");
+		emirates_admin_login.setLocationRelativeTo(null);
+		emirates_admin_login.setVisible(true);
+
+		JLabel admin_pic = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/admin_page.jpg"));
+		admin_pic.setSize(1920, 1080);
+		admin_pic.setBounds(0, 0, 1920, 1080);
+		admin_pic.setLayout(new FlowLayout());
+
+		JLabel admin = new JLabel("Emirates Admin");
+		admin.setSize(900, 110);
+		admin.setBounds(20, 20, 900, 110);
+		admin.setForeground(Color.WHITE);
+		admin.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 90));
+
+		JLabel logo = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/emirates_holo.gif"));
+		logo.setSize(200, 137);
+		logo.setBounds(1650, 850, 200, 137);
+		logo.setLayout(new FlowLayout());
+		
+		JLabel essential = new JLabel("Essentials");
+		essential.setSize(250, 35);
+		essential.setBounds(25, 140, 250, 35);
+		essential.setForeground(Color.DARK_GRAY);
+		essential.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+
+		JPanel essential_panel = new JPanel();
+		essential_panel.setBackground(new Color(0, 0, 0, 50));
+		essential_panel.setSize(1880, 150);
+		essential_panel.setBounds(20, 175, 1880, 150);
+
+		JLabel dep_plan = new JLabel("Flight Departure Plans");
+		dep_plan.setSize(350, 35);
+		dep_plan.setBounds(25, 400, 350, 35);
+		dep_plan.setForeground(Color.DARK_GRAY);
+		dep_plan.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+
+		JPanel dep_plan_panel = new JPanel();
+		dep_plan_panel.setBackground(new Color(0, 0, 0, 50));
+		dep_plan_panel.setSize(1880, 150);
+		dep_plan_panel.setBounds(20, 435, 1880, 150);
+
+		JLabel arr_plan = new JLabel("Flight Arrival Plans");
+		arr_plan.setSize(300, 35);
+		arr_plan.setBounds(25, 660, 300, 35);
+		arr_plan.setForeground(Color.DARK_GRAY);
+		arr_plan.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+
+		JPanel arr_plan_panel = new JPanel();
+		arr_plan_panel.setBackground(new Color(0, 0, 0, 50));
+		arr_plan_panel.setSize(1880, 150);
+		arr_plan_panel.setBounds(20, 695, 1880, 150);
+
+		JButton logout = new JButton("Logout");
+		logout.setSize(250, 35);
+		logout.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+		logout.setBounds(815, 900, 250, 35);
+		logout.setForeground(Color.DARK_GRAY);
+		logout.setBackground(Color.WHITE);
+
+		JButton upd_airport = new JButton("Update Airport");
+		upd_airport.setSize(350, 35);
+		upd_airport.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		upd_airport.setBounds(180, 200, 350, 35);
+		upd_airport.setForeground(Color.WHITE);
+		upd_airport.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_airline = new JButton("Update Airline");
+		upd_airline.setSize(350, 35);
+		upd_airline.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		upd_airline.setBounds(765, 200, 350, 35);
+		upd_airline.setForeground(Color.WHITE);
+		upd_airline.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_flight = new JButton("Update Flight Number");
+		upd_flight.setSize(350, 35);
+		upd_flight.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		upd_flight.setBounds(1350, 200, 350, 35);
+		upd_flight.setForeground(Color.WHITE);
+		upd_flight.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_class = new JButton("Update Class Name");
+		upd_class.setSize(350, 35);
+		upd_class.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		upd_class.setBounds(472, 265, 350, 35);
+		upd_class.setForeground(Color.WHITE);
+		upd_class.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_pnr = new JButton("Update PNR");
+		upd_pnr.setSize(350, 35);
+		upd_pnr.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		upd_pnr.setBounds(1057, 265, 350, 35);
+		upd_pnr.setForeground(Color.WHITE);
+		upd_pnr.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_schd_dep = new JButton("Update Scheduled Departure");
+		upd_schd_dep.setSize(350, 35);
+		upd_schd_dep.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_schd_dep.setBounds(300, 460, 350, 35);
+		upd_schd_dep.setForeground(Color.WHITE);
+		upd_schd_dep.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_exp_dep = new JButton("Update Expected Departure");
+		upd_exp_dep.setSize(350, 35);
+		upd_exp_dep.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_exp_dep.setBounds(775, 460, 350, 35);
+		upd_exp_dep.setForeground(Color.WHITE);
+		upd_exp_dep.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_dep_term = new JButton("Update Departing Terminal");
+		upd_dep_term.setSize(350, 35);
+		upd_dep_term.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_dep_term.setBounds(1240, 460, 350, 35);
+		upd_dep_term.setForeground(Color.WHITE);
+		upd_dep_term.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_dep_gate = new JButton("Update Departure Gate");
+		upd_dep_gate.setSize(350, 35);
+		upd_dep_gate.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_dep_gate.setBounds(300, 525, 350, 35);
+		upd_dep_gate.setForeground(Color.WHITE);
+		upd_dep_gate.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_dep_gate_time = new JButton("Update Dep. Gate Closing Time");
+		upd_dep_gate_time.setSize(350, 35);
+		upd_dep_gate_time.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_dep_gate_time.setBounds(775, 525, 350, 35);
+		upd_dep_gate_time.setForeground(Color.WHITE);
+		upd_dep_gate_time.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_dep_status = new JButton("Update Departure Status");
+		upd_dep_status.setSize(350, 35);
+		upd_dep_status.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_dep_status.setBounds(1240, 525, 350, 35);
+		upd_dep_status.setForeground(Color.WHITE);
+		upd_dep_status.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_schd_arr = new JButton("Update Scheduled Arrival");
+		upd_schd_arr.setSize(350, 35);
+		upd_schd_arr.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_schd_arr.setBounds(420, 720, 350, 35);
+		upd_schd_arr.setForeground(Color.WHITE);
+		upd_schd_arr.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_exp_arr = new JButton("Update Expected Arrival");
+		upd_exp_arr.setSize(350, 35);
+		upd_exp_arr.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_exp_arr.setBounds(1150, 720, 350, 35);
+		upd_exp_arr.setForeground(Color.WHITE);
+		upd_exp_arr.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_arr_term = new JButton("Update Arriving Terminal");
+		upd_arr_term.setSize(350, 35);
+		upd_arr_term.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_arr_term.setBounds(420, 785, 350, 35);
+		upd_arr_term.setForeground(Color.WHITE);
+		upd_arr_term.setBackground(new Color(0, 0, 0, 90));
+
+		JButton upd_arr_status = new JButton("Update Arrival Status");
+		upd_arr_status.setSize(350, 35);
+		upd_arr_status.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		upd_arr_status.setBounds(1150, 785, 350, 35);
+		upd_arr_status.setForeground(Color.WHITE);
+		upd_arr_status.setBackground(new Color(0, 0, 0, 90));
+
+		upd_airport.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Airport upd_ap = new Update_Airport();
+				upd_ap.new_airport();
+			}
+		});
+
+		upd_airline.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Airline upd_al = new Update_Airline();
+				upd_al.new_airline();
+			}
+		});
+
+		upd_flight.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Flight_Number upd_fn = new Update_Flight_Number();
+				upd_fn.new_flight_no();
+			}
+		});
+
+		upd_class.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Class upd_cl = new Update_Class();
+				upd_cl.new_class();
+			}
+		});
+
+		upd_pnr.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_PNR upd_pnr = new Update_PNR();
+				upd_pnr.new_pnr();
+			}
+		});
+
+		upd_schd_dep.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Schd_Departure upd_s_dep = new Update_Schd_Departure();
+				upd_s_dep.new_schd_dep();
+			}
+		});
+
+		upd_exp_dep.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Exp_Departure upd_e_dep = new Update_Exp_Departure();
+				upd_e_dep.new_exp_dep();
+			}
+		});
+
+		upd_dep_term.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Dep_Terminal upd_d_term = new Update_Dep_Terminal();
+				upd_d_term.new_dep_term();
+			}
+		});
+
+		upd_dep_gate.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Dep_Gate upd_d_gate = new Update_Dep_Gate();
+				upd_d_gate.new_dep_gate();
+			}
+		});
+
+		upd_dep_gate_time.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Dep_Gate_Close_Time upd_d_gate_clt = new Update_Dep_Gate_Close_Time();
+				upd_d_gate_clt.new_dep_gate_close_time();
+			}
+		});
+
+		upd_dep_status.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Dep_Status upd_d_status = new Update_Dep_Status();
+				upd_d_status.new_dep_status();
+			}
+		});
+
+		upd_schd_arr.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Schd_Arrival upd_s_arr = new Update_Schd_Arrival();
+				upd_s_arr.new_schd_arr();
+			}
+		});
+
+		upd_exp_arr.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Exp_Arrival upd_e_arr = new Update_Exp_Arrival();
+				upd_e_arr.new_exp_arr();
+			}
+		});
+
+		upd_arr_term.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Arr_Terminal upd_a_term = new Update_Arr_Terminal();
+				upd_a_term.new_arr_term();
+			}
+		});
+
+		upd_arr_status.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Update_Arr_Status upd_a_status = new Update_Arr_Status();
+				upd_a_status.new_arr_status();
+			}
+		});
+
+		logout.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_admin_login.dispose();
+				Login_Page emi_lp = new Login_Page();
+				emi_lp.login_emirates();
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"You have successfully logged out of Emirates Admin Panel!",
+								"Successful Logout",
+								JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		emirates_admin_login.add(upd_arr_status);
+		emirates_admin_login.add(upd_arr_term);
+		emirates_admin_login.add(upd_exp_arr);
+		emirates_admin_login.add(upd_schd_arr);
+		emirates_admin_login.add(upd_dep_status);
+		emirates_admin_login.add(upd_dep_gate_time);
+		emirates_admin_login.add(upd_dep_gate);
+		emirates_admin_login.add(upd_dep_term);
+		emirates_admin_login.add(upd_exp_dep);
+		emirates_admin_login.add(upd_schd_dep);
+		emirates_admin_login.add(upd_pnr);
+		emirates_admin_login.add(upd_class);
+		emirates_admin_login.add(upd_flight);
+		emirates_admin_login.add(upd_airline);
+		emirates_admin_login.add(upd_airport);
+		emirates_admin_login.add(logout);
+		emirates_admin_login.add(arr_plan_panel);
+		emirates_admin_login.add(arr_plan);
+		emirates_admin_login.add(dep_plan_panel);
+		emirates_admin_login.add(dep_plan);
+		emirates_admin_login.add(essential);
+		emirates_admin_login.add(essential_panel);
+		emirates_admin_login.add(logo);
+		emirates_admin_login.add(admin);
+		emirates_admin_login.add(admin_pic);
+
+	}
+}

@@ -1,0 +1,178 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+public class Help {
+	public void emirates_help() {
+		final JFrame emirates_help = new JFrame();
+		emirates_help.setSize(1920, 1080);
+		emirates_help.setLayout(null);
+		emirates_help.setVisible(true);
+		emirates_help.setTitle("Emirates: Help- Dubai International");
+		emirates_help.setLocationRelativeTo(null);
+
+		JLabel img8 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/help_desk.jpg"));
+		img8.setSize(1920, 1080);
+
+		JLabel emi_help = new JLabel("Emirates Help");
+		emi_help.setSize(1200, 110);
+		emi_help.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 90));
+		emi_help.setBounds(20, 20, 1600, 110);
+		emi_help.setForeground(Color.BLACK);
+
+		JLabel logo = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/emirates_holo.gif"));
+		logo.setSize(200, 137);
+		logo.setBounds(1650, 850, 200, 137);
+		logo.setLayout(new FlowLayout());
+		
+		JTextArea help_text1 = new JTextArea(
+				"Our immigration process is simple, but thorough. You can help it run smoothly by preparing ahead – particularly checking whether you need a visa.");
+		help_text1.setSize(1860, 35);
+		help_text1.setFont(new Font("Sansation Regular", Font.PLAIN, 26));
+		help_text1.setBounds(25, 140, 1860, 35);
+		help_text1.setForeground(Color.BLACK);
+		help_text1.setBackground(new Color(0, 0, 0, 50));
+		help_text1.setEditable(false);
+		help_text1.setHighlighter(null);
+
+		JTextArea help_text2 = new JTextArea("\nDo I need a visa for Dubai?");
+		help_text2.setSize(1860, 70);
+		help_text2.setFont(new Font("Sansation Regular", Font.BOLD, 28));
+		help_text2.setBounds(25, 175, 1860, 70);
+		help_text2.setForeground(Color.BLACK);
+		help_text2.setBackground(new Color(0, 0, 0, 50));
+		help_text2.setEditable(false);
+		help_text2.setHighlighter(null);
+
+		JTextArea help_text3 = new JTextArea(
+				"All visitors need a visa to enter the UAE, unless you are from one of these countries, in which case visa is granted on arrival:\n1. GCC (Gulf Cooperation Council) Countries: Bahrain, Kuwait, Oman, Qatar and Saudi Arabia.\n2. Western Europe, North America, Far East and Australasia: Depending on which country you are from you need to check the visa rules on the General Directorate of \n   Residency & Foreigner Affairs website.");
+		help_text3.setSize(1860, 130);
+		help_text3.setFont(new Font("Sansation Regular", Font.PLAIN, 24));
+		help_text3.setBounds(25, 245, 1860, 130);
+		help_text3.setForeground(Color.BLACK);
+		help_text3.setBackground(new Color(0, 0, 0, 50));
+		help_text3.setEditable(false);
+		help_text3.setHighlighter(null);
+
+		JTextArea help_text4 = new JTextArea("\nGetting a visa for Dubai");
+		help_text4.setSize(1860, 75);
+		help_text4.setFont(new Font("Sansation Regular", Font.BOLD, 28));
+		help_text4.setBounds(25, 375, 1860, 75);
+		help_text4.setForeground(Color.BLACK);
+		help_text4.setBackground(new Color(0, 0, 0, 50));
+		help_text4.setEditable(false);
+		help_text4.setHighlighter(null);
+
+		JTextArea help_text5 = new JTextArea(
+				"Check the cost and procedure for applying for a UAE visa with the Dubai Department of Naturalisation and Residency or call 800 5111 for details.\nIf a visa is required, it is best to apply before your arrival in the UAE.\nFor queries regarding visas at the airport, you can visit the immigration and visa office in Terminal 3 arrivals near Entrance 1. The centre is open 24 hours a day.");
+		help_text5.setSize(1860, 105);
+		help_text5.setFont(new Font("Sansation Regular", Font.PLAIN, 24));
+		help_text5.setBounds(25, 450, 1860, 105);
+		help_text5.setForeground(Color.BLACK);
+		help_text5.setBackground(new Color(0, 0, 0, 50));
+		help_text5.setEditable(false);
+		help_text5.setHighlighter(null);
+
+		JTextArea help_text6 = new JTextArea("\nHow long it lasts?");
+		help_text6.setSize(1860, 75);
+		help_text6.setFont(new Font("Sansation Regular", Font.BOLD, 28));
+		help_text6.setBounds(25, 555, 1860, 75);
+		help_text6.setForeground(Color.BLACK);
+		help_text6.setBackground(new Color(0, 0, 0, 50));
+		help_text6.setEditable(false);
+		help_text6.setHighlighter(null);
+
+		JTextArea help_text7 = new JTextArea(
+				"A typical short-term tourist visa lasts 30 days from when you enter the UAE. A long-term last 90 days.\nThe cost of applying for a visa can vary depending on the type and duration of the visa.");
+		help_text7.setSize(1860, 70);
+		help_text7.setFont(new Font("Sansation Regular", Font.PLAIN, 24));
+		help_text7.setBounds(25, 630, 1860, 70);
+		help_text7.setForeground(Color.BLACK);
+		help_text7.setBackground(new Color(0, 0, 0, 50));
+		help_text7.setEditable(false);
+		help_text7.setHighlighter(null);
+
+		JTextArea help_text8 = new JTextArea("\nWant to speed things up?");
+		help_text8.setSize(1860, 75);
+		help_text8.setFont(new Font("Sansation Regular", Font.BOLD, 28));
+		help_text8.setBounds(25, 700, 1860, 75);
+		help_text8.setForeground(Color.BLACK);
+		help_text8.setBackground(new Color(0, 0, 0, 50));
+		help_text8.setEditable(false);
+		help_text8.setHighlighter(null);
+
+		JTextArea help_text9 = new JTextArea(
+				"For a fast track option, try our e-Gates. You can register at the airport");
+		help_text9.setSize(1860, 35);
+		help_text9.setFont(new Font("Sansation Regular", Font.PLAIN, 24));
+		help_text9.setBounds(25, 775, 1860, 35);
+		help_text9.setForeground(Color.BLACK);
+		help_text9.setBackground(new Color(0, 0, 0, 50));
+		help_text9.setEditable(false);
+		help_text9.setHighlighter(null);
+
+		JTextArea help_text10 = new JTextArea("\nSmart Gates");
+		help_text10.setSize(1860, 75);
+		help_text10.setFont(new Font("Sansation Regular", Font.BOLD, 28));
+		help_text10.setBounds(25, 810, 1860, 75);
+		help_text10.setForeground(Color.BLACK);
+		help_text10.setBackground(new Color(0, 0, 0, 50));
+		help_text10.setEditable(false);
+		help_text10.setHighlighter(null);
+
+		JTextArea help_text11 = new JTextArea(
+				"Do you have a modern passport with a barcode? \nThen our Smart Gates are your quickest way through immigration at Terminal 3 arrivals. Simply place your passport’s photo page on the scanner, step into the gate, \ncomplete the eye scan and step through the gate. It takes a matter of seconds.");
+		help_text11.setSize(1860, 105);
+		help_text11.setFont(new Font("Sansation Regular", Font.PLAIN, 24));
+		help_text11.setBounds(25, 885, 1860, 105);
+		help_text11.setForeground(Color.BLACK);
+		help_text11.setBackground(new Color(0, 0, 0, 50));
+		help_text11.setEditable(false);
+		help_text11.setHighlighter(null);
+
+		final JButton back = new JButton("Back");
+		back.setSize(300, 35);
+		back.setForeground(Color.DARK_GRAY);
+		back.setBackground(Color.WHITE);
+		back.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		back.setBounds(790, 980, 300, 35);
+
+		back.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_help.dispose();
+				Welcome_Visitor_Page wp = new Welcome_Visitor_Page();
+				wp.Welcome_Page();
+			}
+		});
+
+		emirates_help.add(back);
+		emirates_help.add(help_text11);
+		emirates_help.add(help_text10);
+		emirates_help.add(help_text9);
+		emirates_help.add(help_text8);
+		emirates_help.add(help_text7);
+		emirates_help.add(help_text6);
+		emirates_help.add(help_text5);
+		emirates_help.add(help_text4);
+		emirates_help.add(help_text3);
+		emirates_help.add(help_text2);
+		emirates_help.add(help_text1);
+		emirates_help.add(logo);
+		emirates_help.add(emi_help);
+		emirates_help.add(img8);
+	}
+}

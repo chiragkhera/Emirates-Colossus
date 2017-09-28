@@ -1,0 +1,331 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class Update_Airport {
+	public void new_airport() {
+		final JFrame frameA = new JFrame();
+		frameA.setSize(711, 400);
+		frameA.setTitle("Emirates Colossus: Admin: Update Airport- Dubai International");
+		frameA.setLocationRelativeTo(null);
+		frameA.setVisible(true);
+
+		JLabel pic1 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/update.jpg"));
+		pic1.setSize(711, 400);
+		pic1.setBounds(0, 0, 711, 400);
+		pic1.setLayout(new FlowLayout());
+
+		JLabel existing_airport = new JLabel("Select Airport's Existing Name:");
+		existing_airport.setSize(350, 30);
+		existing_airport.setForeground(Color.WHITE);
+		existing_airport.setBounds(25, 30, 350, 30);
+		existing_airport.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+
+		String[] airports = new String[61];
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID = "root";
+		String PWD = "root";
+		String Comp_DB_URL = "jdbc:mysql://localhost/emirates?user=" + UID
+				+ "&password=" + PWD;
+		try {
+			Connection conn = DriverManager.getConnection(Comp_DB_URL);
+			Statement stmt = conn.createStatement();
+			String sql;
+			sql = "Select source from arr union select destination from dep;";
+			ResultSet rs = stmt.executeQuery(sql);
+			airports[0] = "Select Airport";
+			int i = 1;
+			while (rs.next()) {
+				airports[i] = rs.getString("source");
+				i++;
+			}
+
+			i = 31;
+			while (rs.next()) {
+				airports[i] = rs.getString("destination");
+				i++;
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		}
+
+		catch (SQLException e1) {
+
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Error in connecting with Emirates!",
+					"Error in Connectivity", JOptionPane.ERROR_MESSAGE);
+		}
+
+		final JComboBox combo_air = new JComboBox(airports);
+		combo_air.setSize(650, 30);
+		combo_air.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+		combo_air.setForeground(Color.BLACK);
+		combo_air.setBounds(25, 65, 650, 30);
+
+		JLabel new_airport = new JLabel("Enter Airport's New Name:");
+		new_airport.setSize(350, 30);
+		new_airport.setForeground(Color.WHITE);
+		new_airport.setBounds(25, 135, 350, 30);
+		new_airport.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+
+		final JTextField new_name = new JTextField();
+		new_name.setSize(650, 30);
+		new_name.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+		new_name.setForeground(Color.BLACK);
+		new_name.setBounds(25, 170, 650, 30);
+
+		final JButton update = new JButton("Update");
+		update.setSize(250, 30);
+		update.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		update.setForeground(Color.DARK_GRAY);
+		update.setBackground(Color.WHITE);
+		update.setBounds(50, 300, 250, 30);
+	
+		JButton close = new JButton("Close");
+		close.setSize(250, 30);
+		close.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		close.setForeground(Color.DARK_GRAY);
+		close.setBackground(Color.WHITE);
+		close.setBounds(411, 300, 250, 30);
+
+		update.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String new_airport_name = new_name.getText();
+				if (1 == combo_air.getSelectedIndex()
+						|| 2 == combo_air.getSelectedIndex()
+						|| 3 == combo_air.getSelectedIndex()
+						|| 4 == combo_air.getSelectedIndex()
+						|| 5 == combo_air.getSelectedIndex()
+						|| 6 == combo_air.getSelectedIndex()
+						|| 7 == combo_air.getSelectedIndex()
+						|| 8 == combo_air.getSelectedIndex()
+						|| 9 == combo_air.getSelectedIndex()
+						|| 10 == combo_air.getSelectedIndex()
+						|| 11 == combo_air.getSelectedIndex()
+						|| 12 == combo_air.getSelectedIndex()
+						|| 13 == combo_air.getSelectedIndex()
+						|| 14 == combo_air.getSelectedIndex()
+						|| 15 == combo_air.getSelectedIndex()
+						|| 16 == combo_air.getSelectedIndex()
+						|| 17 == combo_air.getSelectedIndex()
+						|| 18 == combo_air.getSelectedIndex()
+						|| 19 == combo_air.getSelectedIndex()
+						|| 20 == combo_air.getSelectedIndex()
+						|| 21 == combo_air.getSelectedIndex()
+						|| 22 == combo_air.getSelectedIndex()
+						|| 23 == combo_air.getSelectedIndex()
+						|| 24 == combo_air.getSelectedIndex()
+						|| 25 == combo_air.getSelectedIndex()
+						|| 26 == combo_air.getSelectedIndex()
+						|| 27 == combo_air.getSelectedIndex()
+						|| 28 == combo_air.getSelectedIndex()
+						|| 29 == combo_air.getSelectedIndex()
+						|| 30 == combo_air.getSelectedIndex()) {
+					String source_airport = (String) combo_air
+							.getSelectedItem();
+					if (" ".equals(new_airport_name)){
+						JOptionPane.showMessageDialog(null, "Please enter the new Airport name to be updated.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+					} else {
+						try {
+							Class.forName("java.sql.Driver");
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						String UID = "root";
+						String PWD = "root";
+						String Comp_DB_URL = "jdbc:mysql://localhost/emirates?user="
+								+ UID + "&password=" + PWD;
+						try {
+							Connection conn = DriverManager
+									.getConnection(Comp_DB_URL);
+							Statement stmt = conn.createStatement();
+							String sql;
+							sql = "Update arr set source= '"
+									+ new_airport_name + "' where source= '"
+									+ source_airport + "';";
+							int rs = stmt.executeUpdate(sql);
+							stmt.close();
+							conn.close();
+
+							JOptionPane
+									.showMessageDialog(
+											null,
+											"'"
+													+ source_airport
+													+ "' has been succesfully updated to '"
+													+ new_airport_name
+													+ "'. \nThe relevant changes has been made to the Emirates database!",
+											"Successful Updation",
+											JOptionPane.INFORMATION_MESSAGE);
+							frameA.dispose();
+						} catch (SQLException e1) {
+
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null,
+									"Error in connecting with Emirates!",
+									"Error in Connectivity",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} else if (31 == combo_air.getSelectedIndex()
+						|| 32 == combo_air.getSelectedIndex()
+						|| 33 == combo_air.getSelectedIndex()
+						|| 34 == combo_air.getSelectedIndex()
+						|| 35 == combo_air.getSelectedIndex()
+						|| 36 == combo_air.getSelectedIndex()
+						|| 37 == combo_air.getSelectedIndex()
+						|| 38 == combo_air.getSelectedIndex()
+						|| 39 == combo_air.getSelectedIndex()
+						|| 40 == combo_air.getSelectedIndex()
+						|| 41 == combo_air.getSelectedIndex()
+						|| 42 == combo_air.getSelectedIndex()
+						|| 43 == combo_air.getSelectedIndex()
+						|| 44 == combo_air.getSelectedIndex()
+						|| 45 == combo_air.getSelectedIndex()
+						|| 46 == combo_air.getSelectedIndex()
+						|| 47 == combo_air.getSelectedIndex()
+						|| 48 == combo_air.getSelectedIndex()
+						|| 49 == combo_air.getSelectedIndex()
+						|| 50 == combo_air.getSelectedIndex()
+						|| 51 == combo_air.getSelectedIndex()
+						|| 52 == combo_air.getSelectedIndex()
+						|| 53 == combo_air.getSelectedIndex()
+						|| 54 == combo_air.getSelectedIndex()
+						|| 55 == combo_air.getSelectedIndex()
+						|| 56 == combo_air.getSelectedIndex()
+						|| 57 == combo_air.getSelectedIndex()
+						|| 58 == combo_air.getSelectedIndex()
+						|| 59 == combo_air.getSelectedIndex()
+						|| 60 == combo_air.getSelectedIndex()) {
+					String dest_airport = (String) combo_air.getSelectedItem();
+					
+					if (" ".equals(new_airport_name)) {
+						JOptionPane.showMessageDialog(null,
+								"Please enter the Airport name to be updated.",
+								"Error in Updation", JOptionPane.ERROR_MESSAGE);
+					} 
+					else {
+						try {
+							Class.forName("java.sql.Driver");
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						String UID = "root";
+						String PWD = "root";
+						String Comp_DB_URL = "jdbc:mysql://localhost/emirates?user="
+								+ UID + "&password=" + PWD;
+						try {
+							Connection conn = DriverManager
+									.getConnection(Comp_DB_URL);
+							Statement stmt = conn.createStatement();
+							String sql, sql1, sql2, sql3;
+							sql = "Update dep set destination= '"
+									+ new_airport_name
+									+ "' where destination= '" + dest_airport
+									+ "';";
+							sql1 = "Update meal set to_air= '"
+									+ new_airport_name + "' where to_air= '"
+									+ dest_airport + "';";
+							sql2 = "Update boarding set to_air= '"
+									+ new_airport_name + "' where to_air= '"
+									+ dest_airport + "';";
+							sql3 = "Update seat set immediate_destination= '"
+									+ new_airport_name
+									+ "' where immediate_destination= '"
+									+ dest_airport + "';";
+							int rs = stmt.executeUpdate(sql);
+							int rs1 = stmt.executeUpdate(sql1);
+							int rs2 = stmt.executeUpdate(sql2);
+							int rs3 = stmt.executeUpdate(sql3);
+							stmt.close();
+							conn.close();
+							JOptionPane
+									.showMessageDialog(
+											null,
+											"'"
+													+ dest_airport
+													+ "' has been succesfully updated to '"
+													+ new_airport_name
+													+ "'. \nThe relevant changes has been made to the Emirates database!",
+											"Successful Updation",
+											JOptionPane.INFORMATION_MESSAGE);
+							frameA.dispose();
+
+						}
+
+						catch (SQLException e1) {
+
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null,
+									"Error in connecting with Emirates!",
+									"Error in Connectivity",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+					
+				}
+				else if (0 == combo_air.getSelectedIndex()) {
+					JOptionPane
+							.showMessageDialog(
+									null,
+									"Please select an existing airport name to update!",
+									"Error in Updation",
+									JOptionPane.ERROR_MESSAGE);
+				} else if (0==combo_air.getSelectedIndex() && "".equals(new_airport_name)) {
+					JOptionPane.showMessageDialog(null,
+							"Mandatory fields cannot be left blank.",
+							"Error in Updation", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		close.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				frameA.dispose();
+			}
+		});
+
+		frameA.add(close);
+		frameA.add(update);
+		frameA.add(new_name);
+		frameA.add(new_airport);
+		frameA.add(combo_air);
+		frameA.add(existing_airport);
+		frameA.add(pic1);
+
+	}
+}

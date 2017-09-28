@@ -1,0 +1,136 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
+public class Update_Dep_Gate_Close_Time {
+public void new_dep_gate_close_time(){
+	final JFrame frameJ=new JFrame();
+	frameJ.setSize(711, 400);
+	frameJ.setTitle("Emirates Colossus: Admin: Update Flight Departure Gate Closing Time- Dubai International");
+	frameJ.setLocationRelativeTo(null);
+	frameJ.setVisible(true);
+	
+	JLabel pic10=new JLabel(new ImageIcon("D:/Users/ckhera/Desktop/Emirates/update.jpg"));
+	pic10.setSize(711, 400);
+	pic10.setBounds(0, 0, 711, 400);
+	pic10.setLayout(new FlowLayout());
+	
+	JLabel flight_no=new JLabel("Enter Flight Number:");
+	flight_no.setSize(350, 30);
+	flight_no.setForeground(Color.WHITE);
+	flight_no.setBounds(25, 30, 350, 30);
+	flight_no.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	final JTextField flight_no_select=new JTextField("");
+	flight_no_select.setSize(300, 30);  
+	flight_no_select.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	flight_no_select.setForeground(Color.BLACK);
+	flight_no_select.setBounds(25, 65, 300, 30);
+	
+	JLabel new_gate_ctime=new JLabel("Enter New Departure Gate Closing Time:");
+	new_gate_ctime.setSize(500, 30);
+	new_gate_ctime.setForeground(Color.WHITE);
+	new_gate_ctime.setBounds(25, 135, 500, 30);
+	new_gate_ctime.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	final JTextField new_gate_close=new JTextField("");
+	new_gate_close.setSize(300, 30);  
+	new_gate_close.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	new_gate_close.setForeground(Color.BLACK);
+	new_gate_close.setBounds(25, 170, 300, 30);
+	
+	JButton update=new JButton("Update");
+	update.setSize(250, 30);  
+	update.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	update.setForeground(Color.DARK_GRAY);
+	update.setBackground(Color.WHITE);
+	update.setBounds(50, 300, 250, 30);
+	
+	JButton close=new JButton("Close");
+	close.setSize(250, 30);  
+	close.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	close.setForeground(Color.DARK_GRAY);
+	close.setBackground(Color.WHITE);
+	close.setBounds(411, 300, 250, 30);
+	
+	update.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		String flight_number=flight_no_select.getText();	
+		String gate_close=new_gate_close.getText();
+		if ("".equals(flight_number)){
+			JOptionPane.showMessageDialog(null, "Please enter the flight number to update its Departure Gate Closing Time.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+			}
+		else if("".equals(gate_close)){
+			JOptionPane.showMessageDialog(null, "Please enter the new Departure Gate Closing Time to be updated.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+		}
+		else if("".equals(flight_number) && "".equals(gate_close)){
+		JOptionPane.showMessageDialog(null, "Mandatory fields cannot be left blank.", "Error in Updation", JOptionPane.ERROR_MESSAGE);	
+		}
+		else{
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID="root";
+		String PWD="root";
+		String Comp_DB_URL="jdbc:mysql://localhost/emirates?user="+UID+"&password="+PWD;
+	 	try{
+				Connection conn=DriverManager.getConnection(Comp_DB_URL);
+				Statement stmt=conn.createStatement();
+				String sql, sql1;
+				sql="Update boarding set gate_close_time='"+gate_close+"' where flight_no='"+flight_number+"';";
+				sql1="Update transit set connect_gate_close='"+gate_close+"' where connect_flight_no='"+flight_number+"';";
+				int rs=stmt.executeUpdate(sql);
+				int rs1=stmt.executeUpdate(sql1);
+				stmt.close();
+				conn.close();
+				JOptionPane.showMessageDialog(null, "Gate Closing Time: '"+gate_close+"' has been succesfully updated where flight number was '"+flight_number+"'. \nThe relevant changes has been made to the Emirates database!", "Successful Updation", JOptionPane.INFORMATION_MESSAGE);		
+				frameJ.dispose();
+	 	}
+	 	catch (SQLException e1) {
+			
+			// TODO Auto-generated catch block
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error in connecting with Emirates!", "Error in Connectivity", JOptionPane.ERROR_MESSAGE);				
+		}
+		}
+		}
+	});
+
+	close.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			frameJ.dispose();
+		}
+	});
+
+	frameJ.add(close);
+	frameJ.add(update);
+	frameJ.add(new_gate_close);
+	frameJ.add(new_gate_ctime);
+	frameJ.add(flight_no_select);
+	frameJ.add(flight_no);
+	frameJ.add(pic10);
+}
+}

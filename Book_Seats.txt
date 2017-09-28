@@ -1,0 +1,64 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+
+public class Book_Seats {
+
+	public void meth1(String full_concat, String pnr_travel) {
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Error in connecting with Emirates!",
+					"Error in Connectivity!", JOptionPane.ERROR_MESSAGE);
+		}
+		String UID = "root";
+		String PWD = "root";
+		String Comp_DB_URL = "jdbc:mysql://localhost/emirates?user=" + UID
+				+ "&password=" + PWD;
+		try {
+			Connection conn = DriverManager.getConnection(Comp_DB_URL);
+			final Statement stmt = conn.createStatement();
+			final String sql, sql1;
+			int rs;
+			ResultSet rs1;
+			sql = "Update seat set alloted_seat='" + full_concat
+					+ "' where pnr='" + pnr_travel + "';";
+			sql1 = "Select immediate_destination, flight_no from seat where pnr='"
+					+ pnr_travel + "';";
+
+			rs = stmt.executeUpdate(sql);
+			rs1 = stmt.executeQuery(sql1);
+			while (rs1.next()) {
+				String destination = rs1.getString("immediate_destination");
+				String flight = rs1.getString("flight_no");
+				JOptionPane.showMessageDialog(null,
+						"Congratulations!\nYou have successfully booked your seat '"
+								+ full_concat + "' in flight:\n'" + flight
+								+ "' destined to: '" + destination
+								+ "'.\nWe wish you a safe journey!",
+						"Seat Successflly Reserved!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			rs1.close();
+			stmt.close();
+			conn.close();
+
+		} catch (SQLException e1) {
+
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Error in connecting with Emirates!",
+					"Error in Connectivity!", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+}

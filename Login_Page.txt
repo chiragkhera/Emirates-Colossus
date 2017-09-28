@@ -1,0 +1,194 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+public class Login_Page {
+	public void login_emirates() {
+
+		final JFrame emirates_login = new JFrame();
+		emirates_login.setSize(1920, 1080);
+		emirates_login
+				.setTitle("Emirates Colossus: Login- Dubai International");
+		emirates_login.setLocationRelativeTo(null);
+		emirates_login.setVisible(true);
+
+		JLabel img0 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/meharba.jpg"));
+		img0.setSize(1920, 1080);
+		img0.setBounds(0, 0, 1920, 1080);
+		img0.setLayout(new FlowLayout());
+
+		JLabel img0_1 = new JLabel(
+				new ImageIcon(
+						"D:/Users/ckhera/Desktop/Emirates/Emirates_Login_Transparent3.gif"));
+		img0_1.setSize(282, 306);
+		img0_1.setBounds(170, 10, 282, 306);
+		img0_1.setLayout(new FlowLayout());
+
+		JLabel emirates = new JLabel("Emirates");
+		emirates.setSize(700, 150);
+		emirates.setBounds(10, 295, 700, 150);
+		emirates.setForeground(new Color(128, 0, 0));
+		emirates.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 135));
+
+		JButton login_visitor = new JButton("Login as a Visitor");
+		login_visitor.setSize(350, 45);
+		login_visitor.setBounds(130, 500, 350, 45);
+		login_visitor.setForeground(new Color(128, 0, 0));
+		login_visitor.setBackground(new Color(0, 0, 0, 50));
+		login_visitor.setFont(new Font("Sansation Regular", Font.BOLD, 32));
+
+		JButton login_admin = new JButton("Login as an Admin");
+		login_admin.setSize(350, 45);
+		login_admin.setBounds(130, 600, 350, 45);
+		login_admin.setForeground(new Color(128, 0, 0));
+		login_admin.setBackground(new Color(0, 0, 0, 50));
+		login_admin.setFont(new Font("Sansation Regular", Font.BOLD, 32));
+
+		final JPanel signin = new JPanel();
+		signin.setSize(500, 210);
+		signin.setBounds(50, 690, 500, 210);
+		signin.setBackground(new Color(0, 0, 0, 50));
+		signin.setVisible(false);
+
+		final JLabel user = new JLabel("Username:");
+		user.setSize(150, 30);
+		user.setBounds(55, 720, 150, 30);
+		user.setForeground(new Color(128, 0, 0));
+		user.setFont(new Font("Sansation Regular", Font.BOLD, 28));
+		user.setVisible(false);
+
+		final JTextField username = new JTextField("");
+		username.setSize(250, 30);
+		username.setBounds(240, 720, 250, 30);
+		username.setForeground(new Color(128, 0, 0));
+		username.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		username.setVisible(false);
+
+		final JLabel pass = new JLabel("Password:");
+		pass.setSize(150, 30);
+		pass.setBounds(55, 780, 150, 30);
+		pass.setForeground(new Color(128, 0, 0));
+		pass.setFont(new Font("Sansation Regular", Font.BOLD, 28));
+		pass.setVisible(false);
+
+		final JPasswordField password = new JPasswordField(12);
+		password.setSize(250, 30);
+		password.setBounds(240, 780, 250, 30);
+		password.setForeground(new Color(128, 0, 0));
+		password.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		password.setVisible(false);
+
+		final JButton ok = new JButton("OK");
+		ok.setSize(100, 30);
+		ok.setBounds(272, 840, 100, 30);
+		ok.setForeground(new Color(128, 0, 0));
+		ok.setBackground(new Color(0, 0, 0, 50));
+		ok.setFont(new Font("Sansation Regular", Font.BOLD, 28));
+		ok.setVisible(false);
+
+		login_visitor.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_login.dispose();
+				Welcome_Visitor_Page wp = new Welcome_Visitor_Page();
+				wp.Welcome_Page();
+			}
+		});
+
+		login_admin.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				signin.setVisible(true);
+				user.setVisible(true);
+				username.setVisible(true);
+				pass.setVisible(true);
+				password.setVisible(true);
+				ok.setVisible(true);
+
+				ok.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						final String username_select = username.getText();
+						final String password_select = password.getText();
+						if ("ckhera".equals(username_select)
+								&& "ChiragSteria".equals(password_select)) {
+							JOptionPane.showMessageDialog(null,
+									"Welcome to Emirates Admin Panel!",
+									"Successful Login",
+									JOptionPane.INFORMATION_MESSAGE);
+							emirates_login.dispose();
+							Admin_Login adm = new Admin_Login();
+							adm.Admin();
+						} else if ("".equals(username_select)
+								&& !("".equals(password_select)))
+							JOptionPane.showMessageDialog(null,
+									"Please enter the username to login!",
+									"Error Loging in",
+									JOptionPane.ERROR_MESSAGE);
+						else if ("".equals(password_select)
+								&& !("".equals(username_select)))
+							JOptionPane.showMessageDialog(null,
+									"Please enter the password to login!",
+									"Error Loging in",
+									JOptionPane.ERROR_MESSAGE);
+						else if ("".equals(username_select)
+								&& "".equals(password_select))
+							JOptionPane
+									.showMessageDialog(
+											null,
+											"Please enter the username and password to login!",
+											"Error Loging in",
+											JOptionPane.ERROR_MESSAGE);
+						else {
+							JOptionPane
+									.showMessageDialog(
+											null,
+											"You have not entered a valid combination of username and password! \nPlease enter a valid combination of username and password to login.",
+											"Error Loging in",
+											JOptionPane.ERROR_MESSAGE);
+							username.setText("");
+							password.setText("");
+						}
+					}
+				});
+			}
+		});
+
+		emirates_login.add(ok);
+		emirates_login.add(password);
+		emirates_login.add(pass);
+		emirates_login.add(username);
+		emirates_login.add(user);
+		emirates_login.add(signin);
+		emirates_login.add(login_admin);
+		emirates_login.add(login_visitor);
+		emirates_login.add(emirates);
+		emirates_login.add(img0_1);
+		emirates_login.add(img0);
+
+	}
+
+	public static void main(String args[]) {
+		Login_Page lp = new Login_Page();
+		lp.login_emirates();
+	}
+
+}

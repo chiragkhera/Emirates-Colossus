@@ -1,0 +1,134 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
+public class Update_Schd_Arrival {
+public void new_schd_arr(){
+	final JFrame frameL=new JFrame();
+	frameL.setSize(711, 400);
+	frameL.setTitle("Emirates Colossus: Admin: Update Flight Scheduled Arrival Time- Dubai International");
+	frameL.setLocationRelativeTo(null);
+	frameL.setVisible(true);
+	
+	JLabel pic12=new JLabel(new ImageIcon("D:/Users/ckhera/Desktop/Emirates/update.jpg"));
+	pic12.setSize(711, 400);
+	pic12.setBounds(0, 0, 711, 400);
+	pic12.setLayout(new FlowLayout());
+	
+	JLabel flight_no=new JLabel("Enter Flight Number:");
+	flight_no.setSize(350, 30);
+	flight_no.setForeground(Color.WHITE);
+	flight_no.setBounds(25, 30, 350, 30);
+	flight_no.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	final JTextField flight_no_select=new JTextField("");
+	flight_no_select.setSize(300, 30);  
+	flight_no_select.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	flight_no_select.setForeground(Color.BLACK);
+	flight_no_select.setBounds(25, 65, 300, 30);
+	
+	JLabel new_schd_arr=new JLabel("Enter New Scheduled Arrival Time:");
+	new_schd_arr.setSize(450, 30);
+	new_schd_arr.setForeground(Color.WHITE);
+	new_schd_arr.setBounds(25, 135, 450, 30);
+	new_schd_arr.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	final JTextField new_schd_arr_select=new JTextField("");
+	new_schd_arr_select.setSize(300, 30);  
+	new_schd_arr_select.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	new_schd_arr_select.setForeground(Color.BLACK);
+	new_schd_arr_select.setBounds(25, 170, 300, 30);
+	
+	JButton update=new JButton("Update");
+	update.setSize(250, 30);  
+	update.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	update.setForeground(Color.DARK_GRAY);
+	update.setBackground(Color.WHITE);
+	update.setBounds(50, 300, 250, 30);
+	
+	JButton close=new JButton("Close");
+	close.setSize(250, 30);  
+	close.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	close.setForeground(Color.DARK_GRAY);
+	close.setBackground(Color.WHITE);
+	close.setBounds(411, 300, 250, 30);
+	
+	update.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		String flight_number=flight_no_select.getText();	
+		String new_schd_arrival=new_schd_arr_select.getText();
+		if ("".equals(flight_number)){
+			JOptionPane.showMessageDialog(null, "Please enter the flight number to update its Scheduled Arrival Time.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+			}
+		else if("".equals(new_schd_arrival)){
+			JOptionPane.showMessageDialog(null, "Please enter the new Scheduled Arrival Time to be updated.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+		}
+		else if("".equals(flight_number) && "".equals(new_schd_arrival)){
+		JOptionPane.showMessageDialog(null, "Mandatory fields cannot be left blank.", "Error in Updation", JOptionPane.ERROR_MESSAGE);	
+		}
+		else{
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID="root";
+		String PWD="root";
+		String Comp_DB_URL="jdbc:mysql://localhost/emirates?user="+UID+"&password="+PWD;
+	 	try{
+				Connection conn=DriverManager.getConnection(Comp_DB_URL);
+				Statement stmt=conn.createStatement();
+				String sql;
+				sql="Update arr set scheduled_arrival='"+new_schd_arrival+"' where flight_no='"+flight_number+"';";
+				int rs=stmt.executeUpdate(sql);
+				stmt.close();
+				conn.close();
+				JOptionPane.showMessageDialog(null, "Scheduled Arrival Time: '"+new_schd_arrival+"' has been succesfully updated where flight number was '"+flight_number+"'. \nThe relevant changes has been made to the Emirates database!", "Successful Updation", JOptionPane.INFORMATION_MESSAGE);		
+				frameL.dispose();
+	 	}
+	 	catch (SQLException e1) {
+			
+			// TODO Auto-generated catch block
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error in connecting with Emirates!", "Error in Connectivity", JOptionPane.ERROR_MESSAGE);				
+		}
+		}
+		}
+	});
+	
+	close.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			frameL.dispose();
+		}
+	});
+
+	frameL.add(close);
+	frameL.add(update);
+	frameL.add(new_schd_arr_select);
+	frameL.add(new_schd_arr);
+	frameL.add(flight_no_select);
+	frameL.add(flight_no);
+	frameL.add(pic12);
+}
+}

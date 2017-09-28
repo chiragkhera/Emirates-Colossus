@@ -1,0 +1,3073 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class Manage_Seats {
+	public void emirates_seat() {
+
+		final JFrame emirates_mng_seat = new JFrame();
+		emirates_mng_seat.setSize(1920, 1080);
+		emirates_mng_seat.setLayout(null);
+		emirates_mng_seat.setVisible(true);
+		emirates_mng_seat
+				.setTitle("Emirates: Reserve Your Seat- Dubai International");
+		emirates_mng_seat.setLocationRelativeTo(null);
+		JLabel img5 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/edit2.jpg"));
+		img5.setSize(1920, 1080);
+
+		JLabel manage = new JLabel("Manage Seats");
+		manage.setForeground(Color.WHITE);
+		manage.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 90));
+		manage.setSize(800, 110);
+		manage.setBounds(20, 20, 800, 110);
+
+		JLabel logo = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/emirates_holo.gif"));
+		logo.setSize(200, 137);
+		logo.setBounds(1650, 850, 200, 137);
+		logo.setLayout(new FlowLayout());
+		
+		JPanel seat_panel = new JPanel();
+		seat_panel.setBackground(new Color(0, 0, 0, 50));
+		seat_panel.setSize(1870, 745);
+		seat_panel.setBounds(20, 260, 1870, 745);
+
+		final JLabel uae = new JLabel("United Arab Emirates");
+		uae.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 140));
+		uae.setSize(1700, 130);
+		uae.setForeground(Color.WHITE);
+		uae.setBounds(180, 550, 1700, 130);
+
+		final JLabel dxb = new JLabel("Dubai International");
+		dxb.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 80));
+		dxb.setSize(1400, 90);
+		dxb.setForeground(Color.WHITE);
+		dxb.setBounds(570, 700, 1400, 90);
+		
+		final JButton back_pre = new JButton("Back");
+		back_pre.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+		back_pre.setSize(350, 35);
+		back_pre.setForeground(Color.DARK_GRAY);
+		back_pre.setBounds(765, 900, 350, 35);
+		back_pre.setBackground(Color.WHITE);
+		
+		JLabel destination = new JLabel("Destination Airport:");
+		destination.setSize(280, 30);
+		destination.setBounds(25, 150, 280, 30);
+		destination.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		destination.setForeground(Color.WHITE);
+		
+
+		String[] destination_airports = new String[31];
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID = "root";
+		String PWD = "root";
+		String Comp_DB_URL = "jdbc:mysql://localhost/emirates?user=" + UID
+				+ "&password=" + PWD;
+		try {
+			Connection conn = DriverManager.getConnection(Comp_DB_URL);
+			Statement stmt = conn.createStatement();
+			String sql;
+			sql = "Select destination from dep;";
+			ResultSet rs = stmt.executeQuery(sql);
+			destination_airports[0] = "Select Destination Airport";
+			int i = 1;
+			while (rs.next()) {
+				destination_airports[i] = rs.getString("destination");
+				i++;
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		}
+
+		catch (SQLException e1) {
+
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Error in connecting with Emirates!",
+					"Error in Connectivity", JOptionPane.ERROR_MESSAGE);
+		}
+
+		final JComboBox dest_air = new JComboBox(destination_airports);
+		dest_air.setSize(800, 30);
+		dest_air.setFont(new Font("Sansation Regular", Font.PLAIN, 20));
+		dest_air.setForeground(Color.DARK_GRAY);
+		dest_air.setBounds(350, 150, 800, 30);
+		
+		JLabel pnr = new JLabel("Enter Passenger's PNR:");
+		pnr.setSize(300, 30);
+		pnr.setBounds(25, 220, 300, 30);
+		pnr.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		pnr.setForeground(Color.WHITE);
+		
+		final JTextField pass_pnr = new JTextField();
+		pass_pnr.setForeground(Color.DARK_GRAY);
+		pass_pnr.setFont(new Font("Sansation Regular", Font.PLAIN, 20));
+		pass_pnr.setSize(220, 30);
+		pass_pnr.setBounds(350, 220, 220, 30);
+		
+		final JButton verify = new JButton("Verify");
+		verify.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		verify.setSize(130, 30);
+		verify.setBounds(750, 220, 130, 30);
+		verify.setForeground(Color.DARK_GRAY);
+		verify.setBackground(Color.WHITE);
+
+		final JLabel date = new JLabel("Date of Journey:");
+		date.setSize(250, 30);
+		date.setBounds(25, 290, 250, 30);
+		date.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		date.setForeground(Color.WHITE);
+		date.setVisible(false);
+		
+		final JLabel date_of_journey = new JLabel("");
+		date_of_journey.setBackground(new Color(0, 0, 0, 0));
+		date_of_journey.setBorder(BorderFactory.createLineBorder(new Color(0,
+				0, 0, 0)));
+		date_of_journey.setSize(350, 30);
+		date_of_journey.setBounds(350, 292, 350, 30);
+		date_of_journey.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		date_of_journey.setForeground(Color.WHITE);
+		date_of_journey.setVisible(false);
+
+		final JLabel passengers = new JLabel("No. of Passengers:");
+		passengers.setSize(250, 30);
+		passengers.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		passengers.setForeground(Color.WHITE);
+		passengers.setBounds(25, 360, 250, 30);
+		passengers.setVisible(false);
+		
+		final JLabel no_passengers = new JLabel("");
+		no_passengers.setSize(100, 30);
+		no_passengers.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		no_passengers.setForeground(Color.WHITE);
+		no_passengers.setBounds(350, 362, 100, 30);
+		no_passengers.setBackground(new Color(0, 0, 0, 0));
+		no_passengers.setBorder(BorderFactory.createLineBorder(new Color(0, 0,
+				0, 0)));
+		no_passengers.setVisible(false);
+		
+		final JLabel pass_class = new JLabel("Class:");
+		pass_class.setSize(130, 30);
+		pass_class.setForeground(Color.WHITE);
+		pass_class.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		pass_class.setBounds(25, 420, 130, 30);
+		pass_class.setVisible(false);
+		
+		final JLabel travel_class = new JLabel("");
+		travel_class.setSize(250, 30);
+		travel_class.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		travel_class.setForeground(Color.WHITE);
+		travel_class.setBounds(350, 420, 250, 30);
+		travel_class.setBackground(new Color(0, 0, 0, 0));
+		travel_class.setBorder(BorderFactory.createLineBorder(new Color(0, 0,
+				0, 0)));
+		travel_class.setVisible(false);
+		
+		final JButton view = new JButton("View my aircraft cabin");
+		view.setSize(300, 30);
+		view.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		view.setForeground(Color.DARK_GRAY);
+		view.setBackground(Color.WHITE);
+		view.setBounds(55, 490, 300, 30);
+		view.setEnabled(false);
+		view.setVisible(false);
+		
+		final JPanel img_panel = new JPanel();
+		img_panel.setBackground(new Color(0, 0, 0, 80));
+		img_panel.setSize(1800, 330);
+		img_panel.setBounds(55, 540, 1800, 330);
+		img_panel.setVisible(false);
+		
+		final JLabel cabin_view = new JLabel("Your aircraft's cabin view:");
+		cabin_view.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+		cabin_view.setForeground(Color.WHITE);
+		cabin_view.setSize(400, 30);
+		cabin_view.setBounds(60, 550, 400, 30);
+		cabin_view.setVisible(false);
+		
+		final JTextArea child = new JTextArea(
+				"Since you are an unaccompanied minor, hence we have some \nspecial seats for you. Select your desired seat and row \ncombination from the provided ones to make some new friends! \nHola. See you on-board! :)");
+		
+		final JLabel booking = new JLabel("Book your seat(s):");
+		booking.setSize(230, 30);
+		booking.setForeground(Color.WHITE);
+		booking.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		booking.setBounds(25, 890, 230, 30);
+		booking.setVisible(false);
+
+		final JComboBox seat = new JComboBox();
+		seat.setSize(120, 30);
+		seat.setBounds(350, 890, 120, 30);
+		seat.setForeground(Color.DARK_GRAY);
+		seat.setFont(new Font("Sansation Regular", Font.PLAIN, 20));
+		seat.setVisible(false);
+		
+		final JLabel slash = new JLabel("/");
+		slash.setSize(10, 30);
+		slash.setBounds(475, 890, 10, 30);
+		slash.setForeground(Color.DARK_GRAY);
+		slash.setFont(new Font("Sansation Regular", Font.BOLD, 20));
+		slash.setVisible(false);
+		
+		final JComboBox row = new JComboBox();
+		row.setSize(100, 30);
+		row.setBounds(490, 890, 100, 30);
+		row.setFont(new Font("Sansation Regular", Font.PLAIN, 20));
+		row.setForeground(Color.DARK_GRAY);
+		row.setVisible(false);
+		
+		final JButton book = new JButton("Book my seat(s)");
+		book.setSize(220, 30);
+		book.setBounds(170, 970, 220, 30);
+		book.setForeground(Color.DARK_GRAY);
+		book.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		book.setBackground(Color.WHITE);
+		book.setEnabled(false);
+		book.setVisible(false);
+		
+		final JButton reset = new JButton("Reset");
+		reset.setSize(220, 30);
+		reset.setBounds(845, 970, 220, 30);
+		reset.setBackground(Color.WHITE);
+		reset.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		reset.setForeground(Color.DARK_GRAY);
+		reset.setVisible(false);
+		
+		final JButton back = new JButton("Back");
+		back.setSize(220, 30);
+		back.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		back.setForeground(Color.DARK_GRAY);
+		back.setBackground(Color.WHITE);
+		back.setBounds(1520, 970, 220, 30);
+		back.setVisible(false);
+		
+		final DefaultComboBoxModel first_1 = new DefaultComboBoxModel(
+				new String[] { "Seat", "1", "2", "3", "4", "5" });
+		final DefaultComboBoxModel premium_1 = new DefaultComboBoxModel(
+				new String[] { "Seat", "16", "17", "18", "19", "20", "21",
+						"22", "23", "24", "25", "26", "39", "40" });
+		final DefaultComboBoxModel economy_1 = new DefaultComboBoxModel(
+				new String[] { "Seat", "25", "26", "27", "28", "29", "30",
+						"31", "32", "33", "34", "35", "36", "37", "40", "41",
+						"42", "43", "44", "45", "46", "47", "48", "49", "50",
+						"51", "52", "53" });
+
+		final DefaultComboBoxModel first_1a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "D", "E", "F", "H", "J" });
+		final DefaultComboBoxModel first_1b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "H", "J" });
+		final DefaultComboBoxModel premium_1a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "E", "F", "G", "H",
+						"J" });
+		final DefaultComboBoxModel premium_1b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "H", "J" });
+		final DefaultComboBoxModel premium_1c = new DefaultComboBoxModel(
+				new String[] { "Row", "C", "D", "E", "F", "G" });
+		final DefaultComboBoxModel economy_1a = new DefaultComboBoxModel(
+				new String[] { "Row", "C", "D", "E", "F", "G" });
+		final DefaultComboBoxModel economy_1b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "E", "F", "G", "H",
+						"J" });
+		final DefaultComboBoxModel economy_1c = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "H", "J" });
+		final DefaultComboBoxModel economy_1d = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "H", "J", "C", "D", "E", "F" });
+		final DefaultComboBoxModel economy_1e = new DefaultComboBoxModel(
+				new String[] { "Row", "C", "D", "E", "F" });
+
+		final DefaultComboBoxModel first_2 = new DefaultComboBoxModel(
+				new String[] { "Seat", "1", "2", "3", "4", "5", "6" });
+		final DefaultComboBoxModel economy_2 = new DefaultComboBoxModel(
+				new String[] { "Seat", "28", "29", "30", "31", "32", "33",
+						"34", "35", "36", "37", "38", "39", "40", "41", "42",
+						"43", "44", "45", "46", "47", "48", "49", "50", "51",
+						"52", "53", "54", "55", "56", "57", "58", "59", "60" });
+
+		final DefaultComboBoxModel first_2a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "D", "E", "G", "H" });
+		final DefaultComboBoxModel economy_2a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "E", "F", "G", "H" });
+
+		final DefaultComboBoxModel business_3 = new DefaultComboBoxModel(
+				new String[] { "Seat", "1", "2", "3", "4", "5", "6" });
+		final DefaultComboBoxModel economy_3 = new DefaultComboBoxModel(
+				new String[] { "Seat", "11", "12", "13", "14", "15", "16",
+						"17", "18", "19", "20", "21", "22", "23" });
+		final DefaultComboBoxModel premium_3 = new DefaultComboBoxModel(
+				new String[] { "Seat", "24", "25", "26", "27", "28", "29",
+						"30", "31", "32", "33", "34", "35", "36", "37" });
+
+		final DefaultComboBoxModel business_3a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "G", "H", "K" });
+		final DefaultComboBoxModel business_3b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "H", "K" });
+		final DefaultComboBoxModel economy_3a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "F", "G", "H", "K" });
+		final DefaultComboBoxModel economy_3b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "E", "F", "G", "H", "K" });
+		final DefaultComboBoxModel premium_3a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "E", "F", "G", "H", "K" });
+		final DefaultComboBoxModel premium_3b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "F", "G", "H", "K" });
+
+		final DefaultComboBoxModel first_4 = new DefaultComboBoxModel(
+				new String[] { "Seat", "1", "2" });
+		final DefaultComboBoxModel premium_4 = new DefaultComboBoxModel(
+				new String[] { "Seat", "7", "8", "10", "11", "12", "20", "21" });
+		final DefaultComboBoxModel economy_4 = new DefaultComboBoxModel(
+				new String[] { "Seat", "22", "23", "24", "25", "26", "27",
+						"28", "29", "30", "31", "32", "34", "35" });
+
+		final DefaultComboBoxModel first_4a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "E", "F" });
+		final DefaultComboBoxModel premium_4a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "E", "F" });
+		final DefaultComboBoxModel economy_4a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "E", "F" });
+
+		final DefaultComboBoxModel first_5 = new DefaultComboBoxModel(
+				new String[] { "Seat", "1", "2", "3", "4", "5" });
+		final DefaultComboBoxModel business_5 = new DefaultComboBoxModel(
+				new String[] { "Seat", "6", "7", "8", "9", "10", "18", "19" });
+
+		final DefaultComboBoxModel first_5a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "F" });
+		final DefaultComboBoxModel first_5b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "F" });
+		final DefaultComboBoxModel business_5a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "E", "F" });
+		final DefaultComboBoxModel business_5b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "E", "F" });
+
+		final DefaultComboBoxModel business_6 = new DefaultComboBoxModel(
+				new String[] { "Seat", "3", "4", "5", "6", "7", "8", "9" });
+		final DefaultComboBoxModel unacc_minor_6 = new DefaultComboBoxModel(
+				new String[] { "Seat", "40", "41", "42", "43" });
+		final DefaultComboBoxModel premium_6 = new DefaultComboBoxModel(
+				new String[] { "Seat", "22", "23", "24" });
+		// final DefaultComboBoxModel economy_6=new DefaultComboBoxModel(new
+		// String[] {"Seat", "27", "28", "29", "30", "31", "35", "36", "37",
+		// "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"});
+
+		final DefaultComboBoxModel business_6a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "E", "F", "G", "K", "L" });
+		final DefaultComboBoxModel unacc_minor_6a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C" });
+		final DefaultComboBoxModel premium_6a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "E", "F", "G", "H", "K", "L" });
+		// final DefaultComboBoxModel economy_6a=new DefaultComboBoxModel(new
+		// String[] {"Row", "A", "B", "E", "F", "G", "H", "K", "L"});
+		// final DefaultComboBoxModel economy_6b=new DefaultComboBoxModel(new
+		// String[] {"Row", "A", "B", "C", "E", "F", "G", "H", "J", "K", "L"});
+		// final DefaultComboBoxModel economy_6c=new DefaultComboBoxModel(new
+		// String[] {"Row", "A", "B", "C", "J", "K", "L"});
+		// final DefaultComboBoxModel economy_6d=new DefaultComboBoxModel(new
+		// String[] {"Row", "E", "F", "G", "H", "J", "K", "L"});
+
+		final DefaultComboBoxModel business_7 = new DefaultComboBoxModel(
+				new String[] { "Seat", "6", "7", "8", "9", "10" });
+		final DefaultComboBoxModel economy_7 = new DefaultComboBoxModel(
+				new String[] { "Seat", "11", "12", "13", "14", "15", "16",
+						"17", "18", "19", "20", "21", "22", "23", "24", "25",
+						"26", "27", "28", "29", "30", "31", "32", "33", "34",
+						"35", "36", "37", "38", "39", "40", "41", "42" });
+
+		final DefaultComboBoxModel business_7a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "E", "F", "G", "H",
+						"I" });
+		final DefaultComboBoxModel economy_7a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "E", "F", "G", "H",
+						"I" });
+		final DefaultComboBoxModel economy_7b = new DefaultComboBoxModel(
+				new String[] { "Row", "B", "C", "D", "E", "F", "G", "H" });
+
+		final DefaultComboBoxModel premium_8 = new DefaultComboBoxModel(
+				new String[] { "Seat", "5", "6", "7", "8", "9", "21", "22",
+						"23", "24" });
+		final DefaultComboBoxModel first_8 = new DefaultComboBoxModel(
+				new String[] { "Seat", "1", "2" });
+		final DefaultComboBoxModel business_8 = new DefaultComboBoxModel(
+				new String[] { "Seat", "4", "14" });
+
+		final DefaultComboBoxModel premium_8a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "H", "J", "K" });
+		final DefaultComboBoxModel first_8a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "G", "H", "K" });
+		final DefaultComboBoxModel business_8a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "H", "J", "K" });
+		final DefaultComboBoxModel business_8b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "D", "F", "G", "H", "J",
+						"K" });
+
+		final DefaultComboBoxModel business_9 = new DefaultComboBoxModel(
+				new String[] { "Seat", "2", "3", "4", "5", "6", "7", "8", "9",
+						"10", "20", "21", "22", "23", "24", "25", "26", "27",
+						"28", "29", "30", "31", "32" });
+		final DefaultComboBoxModel economy_9 = new DefaultComboBoxModel(
+				new String[] { "Seat", "11", "12", "13", "14", "17", "18", "19" });
+
+		final DefaultComboBoxModel business_9a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "H", "J", "K" });
+		final DefaultComboBoxModel economy_9a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "B", "C", "H", "J", "K" });
+
+		final DefaultComboBoxModel first_10 = new DefaultComboBoxModel(
+				new String[] { "Seat", "1", "2", "3", "4", "5", "6" });
+		final DefaultComboBoxModel premium_10 = new DefaultComboBoxModel(
+				new String[] { "Seat", "7", "8", "9", "10", "11", "12", "13",
+						"14", "15", "16", "18", "19", "20", "21", "22", "23",
+						"24" });
+		final DefaultComboBoxModel economy_10 = new DefaultComboBoxModel(
+				new String[] { "Seat", "25", "26", "27", "28", "29", "30",
+						"31", "32", "33", "34", "35", "36", "37", "38" });
+
+		final DefaultComboBoxModel first_10a = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "D", "K" });
+		final DefaultComboBoxModel premium_10a = new DefaultComboBoxModel(
+				new String[] { "Row", "D", "E", "F", "G", "H", "K" });
+		final DefaultComboBoxModel premium_10b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "E", "F", "G", "H", "K" });
+		final DefaultComboBoxModel economy_10a = new DefaultComboBoxModel(
+				new String[] { "Row", "D", "E", "F", "G" });
+		final DefaultComboBoxModel economy_10b = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "E", "F", "G", "H", "K" });
+		final DefaultComboBoxModel economy_10c = new DefaultComboBoxModel(
+				new String[] { "Row", "A", "C", "D", "E", "G", "H", "K" });
+		final DefaultComboBoxModel economy_10d = new DefaultComboBoxModel(
+				new String[] { "Row", "D", "E", "G" });
+
+		final DefaultComboBoxModel reset_seat = new DefaultComboBoxModel(
+				new String[] { " " });
+		final DefaultComboBoxModel reset_row = new DefaultComboBoxModel(
+				new String[] { " " });
+
+		final JLabel cabin_image1 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/1_transparent.gif"));
+		final JLabel cabin_image2 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/2_transparent.gif"));
+		final JLabel cabin_image3 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/3_transparent.gif"));
+		final JLabel cabin_image4 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/4_transparent.gif"));
+		final JLabel cabin_image5 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/5_transparent.gif"));
+		final JLabel cabin_image6 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/6_transparent.gif"));
+		final JLabel cabin_image7 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/7_transparent.gif"));
+		final JLabel cabin_image8 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/8_transparent.gif"));
+		final JLabel cabin_image9 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/9_transparent.gif"));
+		final JLabel cabin_image10 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/seat/10_transparent.gif"));
+
+		verify.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				uae.setVisible(false);
+				dxb.setVisible(false);
+				pass_pnr.setEditable(false);
+				dest_air.setEditable(false);
+				verify.setEnabled(false);
+				date.setVisible(true);
+				date_of_journey.setVisible(true);
+				passengers.setVisible(true);
+				no_passengers.setVisible(true);
+				pass_class.setVisible(true);
+				travel_class.setVisible(true);
+				view.setVisible(true);
+				img_panel.setVisible(true);
+				cabin_view.setVisible(true);
+				booking.setVisible(true);
+				seat.setVisible(true);
+				slash.setVisible(true);
+				row.setVisible(true);
+				book.setVisible(true);
+				reset.setVisible(true);
+				back.setVisible(true);
+				back_pre.setVisible(false);
+				
+				final String pnr_str = pass_pnr.getText();
+				final int dest_select = dest_air.getSelectedIndex();
+				final int seat_select = seat.getSelectedIndex();
+				final int row_select = row.getSelectedIndex();
+
+				try {
+					Class.forName("java.sql.Driver");
+				} catch (ClassNotFoundException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+					JOptionPane
+							.showMessageDialog(null,
+									"Error in connecting with Emirates!",
+									"Error in Connectivity!",
+									JOptionPane.ERROR_MESSAGE);
+				}
+				String UID = "root";
+				String PWD = "root";
+				String Comp_DB_URL = "jdbc:mysql://localhost/emirates?user="
+						+ UID + "&password=" + PWD;
+				try {
+					Connection conn = DriverManager.getConnection(Comp_DB_URL);
+					final Statement stmt = conn.createStatement();
+					final String sql;
+					ResultSet rs = null;
+
+					if ((pnr_str.equalsIgnoreCase("EK3381CLIR") && dest_select == 3)
+							|| (pnr_str.equalsIgnoreCase("EK2193LIPO") && dest_select == 18)
+							|| (pnr_str.equalsIgnoreCase("EK5362COIN") && dest_select == 23)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+
+								cabin_image1.setSize(1000, 284);
+								cabin_image1.setBounds(455, 563, 1000, 284);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("EK3381CLIR")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EK3381CLIR'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(economy_1);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("25".equals(seat.getSelectedItem())
+											|| "26".equals(seat
+													.getSelectedItem())
+											|| "37".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_1a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+
+									} else if ("27".equals(seat
+											.getSelectedItem())
+											|| "28".equals(seat
+													.getSelectedItem())
+											|| "29".equals(seat
+													.getSelectedItem())
+											|| "30".equals(seat
+													.getSelectedItem())
+											|| "31".equals(seat
+													.getSelectedItem())
+											|| "32".equals(seat
+													.getSelectedItem())
+											|| "33".equals(seat
+													.getSelectedItem())
+											|| "34".equals(seat
+													.getSelectedItem())
+											|| "35".equals(seat
+													.getSelectedItem())
+											|| "36".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_1b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("40".equals(seat
+											.getSelectedItem())) {
+										row.setModel(economy_1c);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("41".equals(seat
+											.getSelectedItem())
+											|| "42".equals(seat
+													.getSelectedItem())
+											|| "43".equals(seat
+													.getSelectedItem())
+											|| "44".equals(seat
+													.getSelectedItem())
+											|| "45".equals(seat
+													.getSelectedItem())
+											|| "46".equals(seat
+													.getSelectedItem())
+											|| "47".equals(seat
+													.getSelectedItem())
+											|| "48".equals(seat
+													.getSelectedItem())
+											|| "49".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_1b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("50".equals(seat
+											.getSelectedItem())
+											|| "51".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_1d);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("52".equals(seat
+											.getSelectedItem())
+											|| "53".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_1e);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+
+							});
+						}
+
+						else if (pnr_str.equalsIgnoreCase("EK2193LIPO")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EK2193LIPO'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(premium_1);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("16".equals(seat.getSelectedItem())
+											|| "17".equals(seat
+													.getSelectedItem())
+											|| "18".equals(seat
+													.getSelectedItem())
+											|| "19".equals(seat
+													.getSelectedItem())
+											|| "20".equals(seat
+													.getSelectedItem())
+											|| "21".equals(seat
+													.getSelectedItem())
+											|| "22".equals(seat
+													.getSelectedItem())
+											|| "23".equals(seat
+													.getSelectedItem())
+											|| "24".equals(seat
+													.getSelectedItem())) {
+										row.setModel(premium_1a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("25".equals(seat
+											.getSelectedItem())
+											|| "26".equals(seat
+													.getSelectedItem())
+											|| "39".equals(seat
+													.getSelectedItem())) {
+										row.setModel(premium_1b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("40".equals(seat
+											.getSelectedItem())) {
+										row.setModel(premium_1c);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+
+							});
+						} else if (pnr_str.equalsIgnoreCase("EK5362COIN")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EK5362COIN'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(first_1);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("5".equals(seat.getSelectedItem())) {
+										row.setModel(first_1a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("1".equals(seat
+											.getSelectedItem())
+											|| "2".equals(seat
+													.getSelectedItem())
+											|| "3".equals(seat
+													.getSelectedItem())
+											|| "4".equals(seat
+													.getSelectedItem())) {
+										row.setModel(first_1b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+					}
+
+					else if ((pnr_str.equalsIgnoreCase("B65009JOFG") && dest_select == 2)
+							|| (pnr_str.equalsIgnoreCase("MK9936SICH") && dest_select == 11)
+							|| (pnr_str.equalsIgnoreCase("CZ3042SBON") && dest_select == 30)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image2.setSize(1000, 204);
+								cabin_image2.setBounds(455, 603, 1000, 204);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("B65009JOFG")
+								|| pnr_str.equalsIgnoreCase("CZ3042SBON")) {
+							if (pnr_str.equalsIgnoreCase("B65009JOFG")) {
+								sql = "Select class, date_format, no_passengers from seat where pnr='B65009JOFG'";
+								rs = stmt.executeQuery(sql);
+								while (rs.next()) {
+									String date_travel = rs
+											.getString("date_format");
+									date_of_journey.setText(date_travel);
+									int no_pass = rs.getInt("no_passengers");
+									no_passengers.setText(no_pass + " ");
+									String class_passenger = rs
+											.getString("class");
+									travel_class.setText(class_passenger);
+								}
+							} else if (pnr_str.equalsIgnoreCase("CZ3042SBON")) {
+								sql = "Select class, date_format, no_passengers from seat where pnr='CZ3042SBON'";
+								rs = stmt.executeQuery(sql);
+								while (rs.next()) {
+									String date_travel = rs
+											.getString("date_format");
+									date_of_journey.setText(date_travel);
+									int no_pass = rs.getInt("no_passengers");
+									no_passengers.setText(no_pass + " ");
+									String class_passenger = rs
+											.getString("class");
+									travel_class.setText(class_passenger);
+								}
+							}
+							seat.setModel(first_2);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("1".equals(seat.getSelectedItem())
+											|| "2".equals(seat
+													.getSelectedItem())
+											|| "3".equals(seat
+													.getSelectedItem())
+											|| "4".equals(seat
+													.getSelectedItem())
+											|| "5".equals(seat
+													.getSelectedItem())
+											|| "6".equals(seat
+													.getSelectedItem())) {
+										row.setModel(first_2a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+
+							});
+						} else if (pnr_str.equalsIgnoreCase("MK9936SICH")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='MK9936SICH'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(economy_2);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("28".equals(seat.getSelectedItem())
+											|| "29".equals(seat
+													.getSelectedItem())
+											|| "30".equals(seat
+													.getSelectedItem())
+											|| "31".equals(seat
+													.getSelectedItem())
+											|| "32".equals(seat
+													.getSelectedItem())
+											|| "33".equals(seat
+													.getSelectedItem())
+											|| "34".equals(seat
+													.getSelectedItem())
+											|| "35".equals(seat
+													.getSelectedItem())
+											|| "36".equals(seat
+													.getSelectedItem())
+											|| "37".equals(seat
+													.getSelectedItem())
+											|| "38".equals(seat
+													.getSelectedItem())
+											|| "39".equals(seat
+													.getSelectedItem())
+											|| "40".equals(seat
+													.getSelectedItem())
+											|| "41".equals(seat
+													.getSelectedItem())
+											|| "42".equals(seat
+													.getSelectedItem())
+											|| "43".equals(seat
+													.getSelectedItem())
+											|| "44".equals(seat
+													.getSelectedItem())
+											|| "45".equals(seat
+													.getSelectedItem())
+											|| "46".equals(seat
+													.getSelectedItem())
+											|| "47".equals(seat
+													.getSelectedItem())
+											|| "48".equals(seat
+													.getSelectedItem())
+											|| "49".equals(seat
+													.getSelectedItem())
+											|| "50".equals(seat
+													.getSelectedItem())
+											|| "51".equals(seat
+													.getSelectedItem())
+											|| "52".equals(seat
+													.getSelectedItem())
+											|| "53".equals(seat
+													.getSelectedItem())
+											|| "54".equals(seat
+													.getSelectedItem())
+											|| "55".equals(seat
+													.getSelectedItem())
+											|| "56".equals(seat
+													.getSelectedItem())
+											|| "57".equals(seat
+													.getSelectedItem())
+											|| "58".equals(seat
+													.getSelectedItem())
+											|| "59".equals(seat
+													.getSelectedItem())
+											|| "60".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_2a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+					} else if ((pnr_str.equalsIgnoreCase("EK231WDUIL") && dest_select == 1)
+							|| (pnr_str.equalsIgnoreCase("NL7674HAIN") && dest_select == 19)
+							|| (pnr_str.equalsIgnoreCase("SJ9177SYKS") && dest_select == 25)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image3.setSize(1000, 226);
+								cabin_image3.setBounds(455, 592, 1000, 226);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("EK231WDUIL")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EK231WDUIL'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(business_3);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("1".equals(seat.getSelectedItem())
+											|| "2".equals(seat
+													.getSelectedItem())
+											|| "3".equals(seat
+													.getSelectedItem())
+											|| "5".equals(seat
+													.getSelectedItem())
+											|| "6".equals(seat
+													.getSelectedItem())) {
+										row.setModel(business_3a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("4".equals(seat
+											.getSelectedItem())) {
+										row.setModel(business_3b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("NL7674HAIN")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='NL7674HAIN'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(economy_3);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("11".equals(seat.getSelectedItem())) {
+										row.setModel(economy_3a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("12".equals(seat
+											.getSelectedItem())
+											|| "13".equals(seat
+													.getSelectedItem())
+											|| "14".equals(seat
+													.getSelectedItem())
+											|| "15".equals(seat
+													.getSelectedItem())
+											|| "16".equals(seat
+													.getSelectedItem())
+											|| "17".equals(seat
+													.getSelectedItem())
+											|| "18".equals(seat
+													.getSelectedItem())
+											|| "19".equals(seat
+													.getSelectedItem())
+											|| "20".equals(seat
+													.getSelectedItem())
+											|| "21".equals(seat
+													.getSelectedItem())
+											|| "22".equals(seat
+													.getSelectedItem())
+											|| "23".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_3b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("SJ9177SYKS")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='SJ9177SYKS'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(premium_3);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("24".equals(seat.getSelectedItem())
+											|| "25".equals(seat
+													.getSelectedItem())
+											|| "26".equals(seat
+													.getSelectedItem())
+											|| "27".equals(seat
+													.getSelectedItem())
+											|| "28".equals(seat
+													.getSelectedItem())
+											|| "29".equals(seat
+													.getSelectedItem())
+											|| "30".equals(seat
+													.getSelectedItem())
+											|| "31".equals(seat
+													.getSelectedItem())
+											|| "32".equals(seat
+													.getSelectedItem())
+											|| "33".equals(seat
+													.getSelectedItem())) {
+										row.setModel(premium_3a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("34".equals(seat
+											.getSelectedItem())
+											|| "35".equals(seat
+													.getSelectedItem())
+											|| "36".equals(seat
+													.getSelectedItem())
+											|| "37".equals(seat
+													.getSelectedItem())) {
+										row.setModel(premium_3b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+					} else if ((pnr_str.equalsIgnoreCase("TG4502HOKY") && dest_select == 4)
+							|| (pnr_str.equalsIgnoreCase("QF8001GLIN") && dest_select == 12)
+							|| (pnr_str.equalsIgnoreCase("W62498BDFR") && dest_select == 27)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image4.setSize(877, 300);
+								cabin_image4.setBounds(516, 555, 877, 300);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("TG4502HOKY")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='TG4502HOKY'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(premium_4);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("7".equals(seat.getSelectedItem())
+											|| "8".equals(seat
+													.getSelectedItem())
+											|| "10".equals(seat
+													.getSelectedItem())
+											|| "11".equals(seat
+													.getSelectedItem())
+											|| "12".equals(seat
+													.getSelectedItem())
+											|| "20".equals(seat
+													.getSelectedItem())
+											|| "21".equals(seat
+													.getSelectedItem())) {
+										row.setModel(premium_4a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("QF8001GLIN")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='QF8001GLIN'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(economy_4);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("22".equals(seat.getSelectedItem())
+											|| "23".equals(seat
+													.getSelectedItem())
+											|| "24".equals(seat
+													.getSelectedItem())
+											|| "25".equals(seat
+													.getSelectedItem())
+											|| "26".equals(seat
+													.getSelectedItem())
+											|| "27".equals(seat
+													.getSelectedItem())
+											|| "28".equals(seat
+													.getSelectedItem())
+											|| "29".equals(seat
+													.getSelectedItem())
+											|| "30".equals(seat
+													.getSelectedItem())
+											|| "31".equals(seat
+													.getSelectedItem())
+											|| "32".equals(seat
+													.getSelectedItem())
+											|| "34".equals(seat
+													.getSelectedItem())
+											|| "35".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_4a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("W62498BDFR")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='W62498BDFR'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(first_4);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("1".equals(seat.getSelectedItem())
+											|| "2".equals(seat
+													.getSelectedItem())) {
+										row.setModel(first_4a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+					} else if ((pnr_str.equalsIgnoreCase("SA7155CATO") && dest_select == 6)
+							|| (pnr_str.equalsIgnoreCase("FZ8859AMSC") && dest_select == 16)
+							|| (pnr_str.equalsIgnoreCase("PA7445MIMA") && dest_select == 21)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image5.setSize(1000, 256);
+								cabin_image5.setBounds(455, 577, 1000, 256);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("SA7155CATO")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='SA7155CATO'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(first_5);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("1".equals(seat.getSelectedItem())
+											|| "3".equals(seat
+													.getSelectedItem())
+											|| "5".equals(seat
+													.getSelectedItem())) {
+										row.setModel(first_5a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									}
+									if ("2".equals(seat.getSelectedItem())
+											|| "4".equals(seat
+													.getSelectedItem())) {
+										row.setModel(first_5b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("FZ8859AMSC")
+								|| pnr_str.equalsIgnoreCase("PA7445MIMA")) {
+							if (pnr_str.equalsIgnoreCase("FZ8859AMSC")) {
+								sql = "Select class, date_format, no_passengers from seat where pnr='FZ8859AMSC'";
+								rs = stmt.executeQuery(sql);
+								while (rs.next()) {
+									String date_travel = rs
+											.getString("date_format");
+									date_of_journey.setText(date_travel);
+									int no_pass = rs.getInt("no_passengers");
+									no_passengers.setText(no_pass + " ");
+									String class_passenger = rs
+											.getString("class");
+									travel_class.setText(class_passenger);
+								}
+							} else if (pnr_str.equalsIgnoreCase("PA7445MIMA")) {
+								sql = "Select class, date_format, no_passengers from seat where pnr='PA7445MIMA'";
+								rs = stmt.executeQuery(sql);
+								while (rs.next()) {
+									String date_travel = rs
+											.getString("date_format");
+									date_of_journey.setText(date_travel);
+									int no_pass = rs.getInt("no_passengers");
+									no_passengers.setText(no_pass + " ");
+									String class_passenger = rs
+											.getString("class");
+									travel_class.setText(class_passenger);
+								}
+							}
+							seat.setModel(business_5);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("6".equals(seat.getSelectedItem())
+											|| "7".equals(seat
+													.getSelectedItem())
+											|| "8".equals(seat
+													.getSelectedItem())
+											|| "9".equals(seat
+													.getSelectedItem())
+											|| "10".equals(seat
+													.getSelectedItem())
+											|| "19".equals(seat
+													.getSelectedItem())) {
+										row.setModel(business_5a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("18".equals(seat
+											.getSelectedItem())) {
+										row.setModel(business_5b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+					} else if ((pnr_str.equalsIgnoreCase("EK504CHSHX") && dest_select == 5)
+							|| (pnr_str.equalsIgnoreCase("MH4511BAEL") && dest_select == 20)
+							|| (pnr_str.equalsIgnoreCase("CD6E06CNIT") && dest_select == 29)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image6.setSize(1000, 247);
+								cabin_image6.setBounds(455, 581, 1000, 247);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("EK504CHSHX")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EK504CHSHX'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(business_6);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("3".equals(seat.getSelectedItem())
+											|| "4".equals(seat
+													.getSelectedItem())
+											|| "5".equals(seat
+													.getSelectedItem())
+											|| "6".equals(seat
+													.getSelectedItem())
+											|| "7".equals(seat
+													.getSelectedItem())
+											|| "8".equals(seat
+													.getSelectedItem())
+											|| "9".equals(seat
+													.getSelectedItem())) {
+										row.setModel(business_6a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("MH4511BAEL")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='MH4511BAEL'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(unacc_minor_6);
+							child.setVisible(true);
+							child.setSize(450, 80);
+							child.setEditable(false);
+							child.setBackground(new Color(0, 0, 0, 50));
+							child.setFont(new Font("Sansation Regular",
+									Font.PLAIN, 15));
+							child.setBounds(530, 430, 450, 80);
+							child.setForeground(Color.WHITE);
+							child.setBorder(BorderFactory
+									.createLineBorder(Color.BLACK));
+							child.setWrapStyleWord(true);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("40".equals(seat.getSelectedItem())
+											|| "41".equals(seat
+													.getSelectedItem())
+											|| "42".equals(seat
+													.getSelectedItem())
+											|| "43".equals(seat
+													.getSelectedItem())) {
+										row.setModel(unacc_minor_6a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+
+						} else if (pnr_str.equalsIgnoreCase("CD6E06CNIT")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='CD6E06CNIT'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(premium_6);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("22".equals(seat.getSelectedItem())
+											|| "23".equals(seat
+													.getSelectedItem())
+											|| "24".equals(seat
+													.getSelectedItem())) {
+										row.setModel(premium_6a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+					} else if ((pnr_str.equalsIgnoreCase("FZ1473QUAL") && dest_select == 8)
+							|| (pnr_str.equalsIgnoreCase("EK1087ATIN") && dest_select == 13)
+							|| (pnr_str.equalsIgnoreCase("TK7557TRIN") && dest_select == 24)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image7.setSize(1000, 220);
+								cabin_image7.setBounds(455, 595, 1000, 220);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("FZ1473QUAL")
+								|| pnr_str.equalsIgnoreCase("TK7557TRIN")) {
+							if (pnr_str.equalsIgnoreCase("FZ1473QUAL")) {
+								sql = "Select class, date_format, no_passengers from seat where pnr='FZ1473QUAL'";
+								rs = stmt.executeQuery(sql);
+								while (rs.next()) {
+									String date_travel = rs
+											.getString("date_format");
+									date_of_journey.setText(date_travel);
+									int no_pass = rs.getInt("no_passengers");
+									no_passengers.setText(no_pass + " ");
+									String class_passenger = rs
+											.getString("class");
+									travel_class.setText(class_passenger);
+								}
+							} else if (pnr_str.equalsIgnoreCase("TK7557TRIN")) {
+								sql = "Select class, date_format, no_passengers from seat where pnr='TK7557TRIN'";
+								rs = stmt.executeQuery(sql);
+								while (rs.next()) {
+									String date_travel = rs
+											.getString("date_format");
+									date_of_journey.setText(date_travel);
+									int no_pass = rs.getInt("no_passengers");
+									no_passengers.setText(no_pass + " ");
+									String class_passenger = rs
+											.getString("class");
+									travel_class.setText(class_passenger);
+									// rs.close();
+								}
+							}
+							seat.setModel(business_7);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("6".equals(seat.getSelectedItem())
+											|| "7".equals(seat
+													.getSelectedItem())
+											|| "8".equals(seat
+													.getSelectedItem())
+											|| "9".equals(seat
+													.getSelectedItem())
+											|| "10".equals(seat
+													.getSelectedItem())) {
+										row.setModel(business_7a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("EK1087ATIN")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EK1087ATIN'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+							}
+							seat.setModel(economy_7);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("11".equals(seat.getSelectedItem())
+											|| "12".equals(seat
+													.getSelectedItem())
+											|| "13".equals(seat
+													.getSelectedItem())
+											|| "14".equals(seat
+													.getSelectedItem())
+											|| "15".equals(seat
+													.getSelectedItem())
+											|| "16".equals(seat
+													.getSelectedItem())
+											|| "17".equals(seat
+													.getSelectedItem())
+											|| "18".equals(seat
+													.getSelectedItem())
+											|| "19".equals(seat
+													.getSelectedItem())
+											|| "20".equals(seat
+													.getSelectedItem())
+											|| "21".equals(seat
+													.getSelectedItem())
+											|| "22".equals(seat
+													.getSelectedItem())
+											|| "23".equals(seat
+													.getSelectedItem())
+											|| "24".equals(seat
+													.getSelectedItem())
+											|| "25".equals(seat
+													.getSelectedItem())
+											|| "26".equals(seat
+													.getSelectedItem())
+											|| "27".equals(seat
+													.getSelectedItem())
+											| "28".equals(seat
+													.getSelectedItem())
+											|| "29".equals(seat
+													.getSelectedItem())
+											|| "30".equals(seat
+													.getSelectedItem())
+											|| "31".equals(seat
+													.getSelectedItem())
+											|| "32".equals(seat
+													.getSelectedItem())
+											|| "33".equals(seat
+													.getSelectedItem())
+											|| "34".equals(seat
+													.getSelectedItem())
+											|| "35".equals(seat
+													.getSelectedItem())
+											|| "36".equals(seat
+													.getSelectedItem())
+											|| "37".equals(seat
+													.getSelectedItem())
+											|| "38".equals(seat
+													.getSelectedItem())
+											|| "39".equals(seat
+													.getSelectedItem())
+											|| "40".equals(seat
+													.getSelectedItem())
+											|| "41".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_7a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("42".equals(seat
+											.getSelectedItem())) {
+										row.setModel(economy_7b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+
+					} else if ((pnr_str.equalsIgnoreCase("MH4513ADSU") && dest_select == 9)
+							|| (pnr_str.equalsIgnoreCase("SV563AUCKN") && dest_select == 15)
+							|| (pnr_str.equalsIgnoreCase("EK1252VIID") && dest_select == 26)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image8.setSize(1000, 275);
+								cabin_image8.setBounds(455, 567, 1000, 275);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("MH4513ADSU")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='MH4513ADSU'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+
+							}
+							seat.setModel(premium_8);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("5".equals(seat.getSelectedItem())
+											|| "6".equals(seat
+													.getSelectedItem())
+											|| "7".equals(seat
+													.getSelectedItem())
+											|| "8".equals(seat
+													.getSelectedItem())
+											|| "9".equals(seat
+													.getSelectedItem())
+											|| "21".equals(seat
+													.getSelectedItem())
+											|| "22".equals(seat
+													.getSelectedItem())
+											|| "23".equals(seat
+													.getSelectedItem())
+											|| "24".equals(seat
+													.getSelectedItem())) {
+										row.setModel(premium_8a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("SV563AUCKN")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='SV563AUCKN'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+
+							}
+							seat.setModel(first_8);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("1".equals(seat.getSelectedItem())
+											|| "2".equals(seat
+													.getSelectedItem())) {
+										row.setModel(first_8a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("EK1252VIID")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EK1252VIID'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+
+							}
+							seat.setModel(business_8);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("4".equals(seat.getSelectedItem())) {
+										row.setModel(business_8a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("14".equals(seat
+											.getSelectedItem())) {
+										row.setModel(business_8b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+					} else if ((pnr_str.equalsIgnoreCase("QF8043FRIN") && dest_select == 7)
+							|| (pnr_str.equalsIgnoreCase("EK4346BRIN") && dest_select == 14)
+							|| (pnr_str.equalsIgnoreCase("FZ2859BERA") && dest_select == 22)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image9.setSize(1000, 195);
+								cabin_image9.setBounds(455, 607, 1000, 195);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("QF8043FRIN")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='QF8043FRIN'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+
+							}
+							seat.setModel(business_9);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("2".equals(seat.getSelectedItem())
+											|| "3".equals(seat
+													.getSelectedItem())
+											|| "4".equals(seat
+													.getSelectedItem())
+											|| "5".equals(seat
+													.getSelectedItem())
+											|| "6".equals(seat
+													.getSelectedItem())
+											|| "7".equals(seat
+													.getSelectedItem())
+											|| "8".equals(seat
+													.getSelectedItem())
+											|| "9".equals(seat
+													.getSelectedItem())
+											|| "10".equals(seat
+													.getSelectedItem())
+											|| "20".equals(seat
+													.getSelectedItem())
+											|| "21".equals(seat
+													.getSelectedItem())
+											|| "22".equals(seat
+													.getSelectedItem())
+											|| "23".equals(seat
+													.getSelectedItem())
+											|| "24".equals(seat
+													.getSelectedItem())
+											|| "25".equals(seat
+													.getSelectedItem())
+											|| "26".equals(seat
+													.getSelectedItem())
+											|| "27".equals(seat
+													.getSelectedItem())
+											|| "28".equals(seat
+													.getSelectedItem())
+											|| "29".equals(seat
+													.getSelectedItem())
+											|| "30".equals(seat
+													.getSelectedItem())
+											|| "31".equals(seat
+													.getSelectedItem())
+											|| "32".equals(seat
+													.getSelectedItem())) {
+										row.setModel(business_9a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("EK4346BRIN")
+								|| pnr_str.equalsIgnoreCase("FZ2859BERA")) {
+							if (pnr_str.equalsIgnoreCase("EK4346BRIN")) {
+								sql = "Select class, date_format, no_passengers from seat where pnr='EK4346BRIN'";
+								rs = stmt.executeQuery(sql);
+								while (rs.next()) {
+									String date_travel = rs
+											.getString("date_format");
+									date_of_journey.setText(date_travel);
+									int no_pass = rs.getInt("no_passengers");
+									no_passengers.setText(no_pass + " ");
+									String class_passenger = rs
+											.getString("class");
+									travel_class.setText(class_passenger);
+
+								}
+							} else if (pnr_str.equalsIgnoreCase("FZ2859BERA")) {
+								sql = "Select class, date_format, no_passengers from seat where pnr='FZ2859BERA'";
+								rs = stmt.executeQuery(sql);
+								while (rs.next()) {
+									String date_travel = rs
+											.getString("date_format");
+									date_of_journey.setText(date_travel);
+									int no_pass = rs.getInt("no_passengers");
+									no_passengers.setText(no_pass + " ");
+									String class_passenger = rs
+											.getString("class");
+									travel_class.setText(class_passenger);
+
+								}
+							}
+							seat.setModel(economy_9);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("11".equals(seat.getSelectedItem())
+											|| "12".equals(seat
+													.getSelectedItem())
+											|| "13".equals(seat
+													.getSelectedItem())
+											|| "14".equals(seat
+													.getSelectedItem())
+											|| "17".equals(seat
+													.getSelectedItem())
+											|| "18".equals(seat
+													.getSelectedItem())
+											| "19".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_9a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+
+						}
+
+					} else if ((pnr_str.equalsIgnoreCase("EK0751MOVI") && dest_select == 10)
+							|| (pnr_str.equalsIgnoreCase("EY5723NSCB") && dest_select == 17)
+							|| (pnr_str.equalsIgnoreCase("IX8141MANG") && dest_select == 28)) {
+						view.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								cabin_image10.setSize(1000, 201);
+								cabin_image10.setBounds(455, 605, 1000, 201);
+							}
+						});
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Welcome to Emirates Seat Management System. \nYou are now authorized to book your desired seats on-board. \nPress OK to continue!",
+										"Authenticity Verified",
+										JOptionPane.INFORMATION_MESSAGE);
+						view.setEnabled(true);
+						if (pnr_str.equalsIgnoreCase("EK0751MOVI")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EK0751MOVI'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+
+							}
+							seat.setModel(economy_10);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("25".equals(seat.getSelectedItem())) {
+										row.setModel(economy_10a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("26".equals(seat
+											.getSelectedItem())
+											|| "27".equals(seat
+													.getSelectedItem())
+											|| "28".equals(seat
+													.getSelectedItem())
+											|| "29".equals(seat
+													.getSelectedItem())
+											|| "30".equals(seat
+													.getSelectedItem())
+											|| "31".equals(seat
+													.getSelectedItem())
+											|| "32".equals(seat
+													.getSelectedItem())
+											|| "33".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_10b);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("34".equals(seat
+											.getSelectedItem())
+											|| "35".equals(seat
+													.getSelectedItem())
+											|| "36".equals(seat
+													.getSelectedItem())
+											|| "37".equals(seat
+													.getSelectedItem())) {
+										row.setModel(economy_10c);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("38".equals(seat
+											.getSelectedItem())) {
+										row.setModel(economy_10d);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									}
+
+									else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("EY5723NSCB")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='EY5723NSCB'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+
+							}
+							seat.setModel(first_10);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("1".equals(seat.getSelectedItem())
+											|| "2".equals(seat
+													.getSelectedItem())
+											|| "3".equals(seat
+													.getSelectedItem())
+											|| "4".equals(seat
+													.getSelectedItem())
+											|| "5".equals(seat
+													.getSelectedItem())
+											|| "6".equals(seat
+													.getSelectedItem())) {
+										row.setModel(first_10a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									}
+
+									else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						} else if (pnr_str.equalsIgnoreCase("IX8141MANG")) {
+							sql = "Select class, date_format, no_passengers from seat where pnr='IX8141MANG'";
+							rs = stmt.executeQuery(sql);
+							while (rs.next()) {
+								String date_travel = rs
+										.getString("date_format");
+								date_of_journey.setText(date_travel);
+								int no_pass = rs.getInt("no_passengers");
+								no_passengers.setText(no_pass + " ");
+								String class_passenger = rs.getString("class");
+								travel_class.setText(class_passenger);
+
+							}
+							seat.setModel(premium_10);
+							seat.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// TODO Auto-generated method stub
+									if ("7".equals(seat.getSelectedItem())) {
+										row.setModel(premium_10a);
+										row.addActionListener(new ActionListener() {
+
+											@Override
+											public void actionPerformed(
+													ActionEvent e) {
+												// TODO Auto-generated method
+												// stub
+												if (row_select == 0)
+													book.setEnabled(false);
+												else
+													book.setEnabled(true);
+											}
+										});
+									} else if ("8".equals(seat
+											.getSelectedItem())
+											|| "9".equals(seat
+													.getSelectedItem())
+											|| "10".equals(seat
+													.getSelectedItem())
+											|| "11".equals(seat
+													.getSelectedItem())
+											|| "12".equals(seat
+													.getSelectedItem())
+											|| "13".equals(seat
+													.getSelectedItem())
+											|| "14".equals(seat
+													.getSelectedItem())
+											|| "15".equals(seat
+													.getSelectedItem())
+											|| "16".equals(seat
+													.getSelectedItem())
+											|| "17".equals(seat
+													.getSelectedItem())
+											|| "18".equals(seat
+													.getSelectedItem())
+											|| "19".equals(seat
+													.getSelectedItem())
+											|| "20".equals(seat
+													.getSelectedItem())
+											|| "21".equals(seat
+													.getSelectedItem())
+											|| "22".equals(seat
+													.getSelectedItem())
+											|| "23".equals(seat
+													.getSelectedItem())
+											|| "24".equals(seat
+													.getSelectedItem())) {
+										{
+											row.setModel(premium_10b);
+											row.addActionListener(new ActionListener() {
+
+												@Override
+												public void actionPerformed(
+														ActionEvent e) {
+													// TODO Auto-generated
+													// method stub
+													if (row_select == 0)
+														book.setEnabled(false);
+													else
+														book.setEnabled(true);
+												}
+											});
+										}
+
+									}
+
+									else
+										JOptionPane
+												.showMessageDialog(
+														null,
+														"Please enter a valid combination of seat number and row!",
+														"Invalid Combination",
+														JOptionPane.ERROR_MESSAGE);
+								}
+							});
+						}
+					}
+
+					else if (pnr_str.equalsIgnoreCase("") && dest_select == 0) {
+						
+						dest_air.setSelectedIndex(0);
+						pass_pnr.setText("");
+						date_of_journey.setText("");
+						no_passengers.setText("");
+						travel_class.setText("");
+						view.setEnabled(false);
+						seat.setModel(reset_seat);
+						row.setModel(reset_row);
+						book.setEnabled(false);
+						uae.setVisible(true);
+						dxb.setVisible(true);
+						pass_pnr.setEditable(true);
+						dest_air.setEditable(true);
+						verify.setEnabled(true);
+						date.setVisible(false);
+						date_of_journey.setVisible(false);
+						passengers.setVisible(false);
+						no_passengers.setVisible(false);
+						pass_class.setVisible(false);
+						travel_class.setVisible(false);
+						view.setVisible(false);
+						img_panel.setVisible(false);
+						cabin_view.setVisible(false);
+						booking.setVisible(false);
+						seat.setVisible(false);
+						slash.setVisible(false);
+						row.setVisible(false);
+						book.setVisible(false);
+						reset.setVisible(false);
+						back.setVisible(false);
+						back_pre.setVisible(true);
+						cabin_image1.setVisible(false);
+						cabin_image2.setVisible(false);
+						cabin_image3.setVisible(false);
+						cabin_image4.setVisible(false);
+						cabin_image5.setVisible(false);
+						cabin_image6.setVisible(false);
+						cabin_image7.setVisible(false);
+						cabin_image8.setVisible(false);
+						cabin_image9.setVisible(false);
+						cabin_image10.setVisible(false);
+						JOptionPane
+						.showMessageDialog(
+								null,
+								"Please enter the Destination Airport with a valid PNR!",
+								"Error", JOptionPane.ERROR_MESSAGE);
+					} else if (dest_select == 0 && !(pnr_str.equals(""))) {
+						
+						dest_air.setSelectedIndex(0);
+						pass_pnr.setText("");
+						date_of_journey.setText("");
+						no_passengers.setText("");
+						travel_class.setText("");
+						view.setEnabled(false);
+						seat.setModel(reset_seat);
+						row.setModel(reset_row);
+						book.setEnabled(false);
+						uae.setVisible(true);
+						dxb.setVisible(true);
+						pass_pnr.setEditable(true);
+						dest_air.setEditable(true);
+						verify.setEnabled(true);
+						date.setVisible(false);
+						date_of_journey.setVisible(false);
+						passengers.setVisible(false);
+						no_passengers.setVisible(false);
+						pass_class.setVisible(false);
+						travel_class.setVisible(false);
+						view.setVisible(false);
+						img_panel.setVisible(false);
+						cabin_view.setVisible(false);
+						booking.setVisible(false);
+						seat.setVisible(false);
+						slash.setVisible(false);
+						row.setVisible(false);
+						book.setVisible(false);
+						reset.setVisible(false);
+						back.setVisible(false);
+						back_pre.setVisible(true);
+						cabin_image1.setVisible(false);
+						cabin_image2.setVisible(false);
+						cabin_image3.setVisible(false);
+						cabin_image4.setVisible(false);
+						cabin_image5.setVisible(false);
+						cabin_image6.setVisible(false);
+						cabin_image7.setVisible(false);
+						cabin_image8.setVisible(false);
+						cabin_image9.setVisible(false);
+						cabin_image10.setVisible(false);
+						JOptionPane.showMessageDialog(null,
+								"Please enter the Destination Airport!",
+								"Error", JOptionPane.ERROR_MESSAGE);
+					} else if (pnr_str.equals("") && dest_select != 0) {
+						
+						dest_air.setSelectedIndex(0);
+						pass_pnr.setText("");
+						date_of_journey.setText("");
+						no_passengers.setText("");
+						travel_class.setText("");
+						view.setEnabled(false);
+						seat.setModel(reset_seat);
+						row.setModel(reset_row);
+						book.setEnabled(false);
+						uae.setVisible(true);
+						dxb.setVisible(true);
+						pass_pnr.setEditable(true);
+						dest_air.setEditable(true);
+						verify.setEnabled(true);
+						date.setVisible(false);
+						date_of_journey.setVisible(false);
+						passengers.setVisible(false);
+						no_passengers.setVisible(false);
+						pass_class.setVisible(false);
+						travel_class.setVisible(false);
+						view.setVisible(false);
+						img_panel.setVisible(false);
+						cabin_view.setVisible(false);
+						booking.setVisible(false);
+						seat.setVisible(false);
+						slash.setVisible(false);
+						row.setVisible(false);
+						book.setVisible(false);
+						reset.setVisible(false);
+						back.setVisible(false);
+						back_pre.setVisible(true);
+						cabin_image1.setVisible(false);
+						cabin_image2.setVisible(false);
+						cabin_image3.setVisible(false);
+						cabin_image4.setVisible(false);
+						cabin_image5.setVisible(false);
+						cabin_image6.setVisible(false);
+						cabin_image7.setVisible(false);
+						cabin_image8.setVisible(false);
+						cabin_image9.setVisible(false);
+						cabin_image10.setVisible(false);
+						JOptionPane.showMessageDialog(null,
+								"Please enter the PNR!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+
+					else {
+						
+						dest_air.setSelectedIndex(0);
+						pass_pnr.setText("");
+						date_of_journey.setText("");
+						no_passengers.setText("");
+						travel_class.setText("");
+						view.setEnabled(false);
+						seat.setModel(reset_seat);
+						row.setModel(reset_row);
+						book.setEnabled(false);
+						uae.setVisible(true);
+						dxb.setVisible(true);
+						pass_pnr.setEditable(true);
+						dest_air.setEditable(true);
+						verify.setEnabled(true);
+						date.setVisible(false);
+						date_of_journey.setVisible(false);
+						passengers.setVisible(false);
+						no_passengers.setVisible(false);
+						pass_class.setVisible(false);
+						travel_class.setVisible(false);
+						view.setVisible(false);
+						img_panel.setVisible(false);
+						cabin_view.setVisible(false);
+						booking.setVisible(false);
+						seat.setVisible(false);
+						slash.setVisible(false);
+						row.setVisible(false);
+						book.setVisible(false);
+						reset.setVisible(false);
+						back.setVisible(false);
+						back_pre.setVisible(true);
+						cabin_image1.setVisible(false);
+						cabin_image2.setVisible(false);
+						cabin_image3.setVisible(false);
+						cabin_image4.setVisible(false);
+						cabin_image5.setVisible(false);
+						cabin_image6.setVisible(false);
+						cabin_image7.setVisible(false);
+						cabin_image8.setVisible(false);
+						cabin_image9.setVisible(false);
+						cabin_image10.setVisible(false);
+						JOptionPane
+						.showMessageDialog(
+								null,
+								"The Destination Airport and PNR you entered does not match with Emirates database. \nPlease enter the correct Destination Airport with a valid PNR.",
+								"Mismatch with Emirates Database",
+								JOptionPane.ERROR_MESSAGE);
+					}
+
+					book.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							String seat_concat = seat.getSelectedItem()
+									.toString();
+							String row_concat = row.getSelectedItem()
+									.toString();
+							String full_concat = seat_concat.concat(row_concat);
+							String pnr_travel = pass_pnr.getText();
+
+							Book_Seats cfb = new Book_Seats();
+							cfb.meth1(full_concat, pnr_travel);
+						}
+					});
+
+					rs.close();
+					stmt.close();
+					conn.close();
+
+				} catch (SQLException e1) {
+
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					JOptionPane
+							.showMessageDialog(null,
+									"Error in connecting with Emirates!",
+									"Error in Connectivity!",
+									JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		reset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dest_air.setSelectedIndex(0);
+				pass_pnr.setText("");
+				date_of_journey.setText("");
+				no_passengers.setText("");
+				travel_class.setText("");
+				view.setEnabled(false);
+				seat.setModel(reset_seat);
+				row.setModel(reset_row);
+				book.setEnabled(false);
+				uae.setVisible(true);
+				dxb.setVisible(true);
+				pass_pnr.setEditable(true);
+				dest_air.setEditable(true);
+				verify.setEnabled(true);
+				date.setVisible(false);
+				date_of_journey.setVisible(false);
+				passengers.setVisible(false);
+				no_passengers.setVisible(false);
+				pass_class.setVisible(false);
+				travel_class.setVisible(false);
+				view.setVisible(false);
+				img_panel.setVisible(false);
+				cabin_view.setVisible(false);
+				booking.setVisible(false);
+				seat.setVisible(false);
+				slash.setVisible(false);
+				row.setVisible(false);
+				book.setVisible(false);
+				reset.setVisible(false);
+				back.setVisible(false);
+				cabin_image1.setVisible(false);
+				cabin_image2.setVisible(false);
+				cabin_image3.setVisible(false);
+				cabin_image4.setVisible(false);
+				cabin_image5.setVisible(false);
+				cabin_image6.setVisible(false);
+				cabin_image7.setVisible(false);
+				cabin_image8.setVisible(false);
+				cabin_image9.setVisible(false);
+				cabin_image10.setVisible(false);
+				emirates_mng_seat.dispose();
+				Manage_Seats mng_seat=new Manage_Seats();
+				mng_seat.emirates_seat();
+			}
+		});
+
+		back.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_mng_seat.dispose();
+				Welcome_Visitor_Page wp = new Welcome_Visitor_Page();
+				wp.Welcome_Page();
+			}
+		});
+
+		back_pre.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_mng_seat.dispose();
+				Welcome_Visitor_Page wp = new Welcome_Visitor_Page();
+				wp.Welcome_Page();
+			}
+		});
+		
+		emirates_mng_seat.add(cabin_image10);
+		emirates_mng_seat.add(cabin_image9);
+		emirates_mng_seat.add(cabin_image8);
+		emirates_mng_seat.add(cabin_image7);
+		emirates_mng_seat.add(cabin_image6);
+		emirates_mng_seat.add(cabin_image5);
+		emirates_mng_seat.add(cabin_image4);
+		emirates_mng_seat.add(cabin_image3);
+		emirates_mng_seat.add(cabin_image2);
+		emirates_mng_seat.add(cabin_image1);
+		emirates_mng_seat.add(child);
+		emirates_mng_seat.add(back);
+		emirates_mng_seat.add(reset);
+		emirates_mng_seat.add(book);
+		emirates_mng_seat.add(row);
+		emirates_mng_seat.add(slash);
+		emirates_mng_seat.add(seat);
+		emirates_mng_seat.add(booking);
+		emirates_mng_seat.add(cabin_view);
+		emirates_mng_seat.add(img_panel);
+		emirates_mng_seat.add(view);
+		emirates_mng_seat.add(travel_class);
+		emirates_mng_seat.add(pass_class);
+		emirates_mng_seat.add(no_passengers);
+		emirates_mng_seat.add(passengers);
+		emirates_mng_seat.add(date_of_journey);
+		emirates_mng_seat.add(date);
+		emirates_mng_seat.add(verify);
+		emirates_mng_seat.add(pass_pnr);
+		emirates_mng_seat.add(pnr);
+		emirates_mng_seat.add(dest_air);
+		emirates_mng_seat.add(destination);
+		emirates_mng_seat.add(back_pre);
+		emirates_mng_seat.add(dxb);
+		emirates_mng_seat.add(uae);
+		emirates_mng_seat.add(seat_panel);
+		emirates_mng_seat.add(logo);
+		emirates_mng_seat.add(manage);
+		emirates_mng_seat.add(img5);
+
+	}
+}

@@ -1,0 +1,282 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class Flight_Schedules {
+	public void schedules() {
+		// TODO Auto-generated method stub
+		final JFrame emirates_flight_schd = new JFrame();
+		emirates_flight_schd.setSize(1920, 1080);
+		emirates_flight_schd.setLayout(null);
+		emirates_flight_schd.setVisible(true);
+		emirates_flight_schd
+				.setTitle("Emirates: Flight Schedules- Dubai International");
+		emirates_flight_schd.setLocationRelativeTo(null);
+		JLabel img2 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/edit1.jpg"));
+		img2.setSize(1920, 1080);
+
+		JLabel flight = new JLabel("Flight");
+		flight.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 90));
+		flight.setForeground(Color.WHITE);
+		flight.setSize(400, 120);
+		flight.setBounds(30, 60, 400, 120);
+
+		JLabel schedule = new JLabel("Schedules");
+		schedule.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 90));
+		schedule.setForeground(Color.WHITE);
+		schedule.setSize(500, 120);
+		schedule.setBounds(30, 170, 500, 120);
+
+		JLabel logo = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/emirates_holo.gif"));
+		logo.setSize(200, 137);
+		logo.setBounds(1650, 850, 200, 137);
+		logo.setLayout(new FlowLayout());
+		
+		JPanel arrival_panel = new JPanel();
+		arrival_panel.setBackground(new Color(0, 0, 0, 50));
+		arrival_panel.setSize(1860, 150);
+		arrival_panel.setBounds(30, 330, 1860, 150);
+
+		JPanel departure_panel = new JPanel();
+		departure_panel.setBackground(new Color(0, 0, 0, 90));
+		departure_panel.setSize(1860, 150);
+		departure_panel.setBounds(30, 550, 1860, 150);
+
+		JLabel arrivals = new JLabel("Arrivals:");
+		arrivals.setFont(new Font("Sansation Regular", Font.BOLD, 40));
+		arrivals.setForeground(Color.WHITE);
+		arrivals.setSize(250, 40);
+		arrivals.setBounds(34, 335, 250, 40);
+
+		JLabel departures = new JLabel("Departures:");
+		departures.setFont(new Font("Sansation Regular", Font.BOLD, 40));
+		departures.setForeground(Color.WHITE);
+		departures.setSize(300, 30);
+		departures.setBounds(34, 555, 300, 40);
+
+		JLabel source = new JLabel("Source Airport:");
+		source.setSize(220, 30);
+		source.setBounds(34, 410, 220, 30);
+		source.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		source.setForeground(Color.WHITE);
+
+		String[] source_airports = new String[31];
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID_source = "root";
+		String PWD_source = "root";
+		String Comp_DB_URL_source = "jdbc:mysql://localhost/emirates?user="
+				+ UID_source + "&password=" + PWD_source;
+		try {
+			Connection conn = DriverManager.getConnection(Comp_DB_URL_source);
+			Statement stmt = conn.createStatement();
+			String sql;
+			sql = "Select source from arr;";
+			ResultSet rs = stmt.executeQuery(sql);
+			source_airports[0] = "Select Source Airport";
+			int i = 1;
+			while (rs.next()) {
+				source_airports[i] = rs.getString("source");
+				i++;
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		}
+
+		catch (SQLException e1) {
+
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Error in connecting with Emirates!",
+					"Error in Connectivity", JOptionPane.ERROR_MESSAGE);
+		}
+		final JComboBox combo_source = new JComboBox(source_airports);
+		combo_source.setSize(800, 30);
+		combo_source.setFont(new Font("Sansation Regular", Font.PLAIN, 20));
+		combo_source.setForeground(Color.BLACK);
+		combo_source.setBounds(320, 410, 800, 30);
+
+		JLabel destination = new JLabel("Destination Airport:");
+		destination.setSize(250, 30);
+		destination.setBounds(34, 630, 250, 30);
+		destination.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		destination.setForeground(Color.WHITE);
+
+		String[] destination_airports = new String[31];
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID_dest = "root";
+		String PWD_dest = "root";
+		String Comp_DB_URL_dest = "jdbc:mysql://localhost/emirates?user="
+				+ UID_dest + "&password=" + PWD_dest;
+		try {
+			Connection conn = DriverManager.getConnection(Comp_DB_URL_dest);
+			Statement stmt = conn.createStatement();
+			String sql;
+			sql = "Select destination from dep;";
+			ResultSet rs = stmt.executeQuery(sql);
+			destination_airports[0] = "Select Destination Airport";
+			int i = 1;
+			while (rs.next()) {
+				destination_airports[i] = rs.getString("destination");
+				i++;
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		}
+
+		catch (SQLException e1) {
+
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Error in connecting with Emirates!",
+					"Error in Connectivity", JOptionPane.ERROR_MESSAGE);
+		}
+
+		final JComboBox combo_dest = new JComboBox(destination_airports);
+		combo_dest.setSize(800, 30);
+		combo_dest.setFont(new Font("Sansation Regular", Font.PLAIN, 20));
+		combo_dest.setForeground(Color.BLACK);
+		combo_dest.setBounds(320, 630, 800, 30);
+
+		final JButton arrival_reset = new JButton("Reset");
+		arrival_reset.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		arrival_reset.setSize(200, 30);
+		arrival_reset.setForeground(Color.DARK_GRAY);
+		arrival_reset.setBounds(1250, 410, 200, 30);
+		arrival_reset.setBackground(Color.WHITE);
+
+		final JButton departure_reset = new JButton("Reset");
+		departure_reset.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+		departure_reset.setSize(200, 30);
+		departure_reset.setForeground(Color.DARK_GRAY);
+		departure_reset.setBounds(1250, 630, 200, 30);
+		departure_reset.setBackground(Color.WHITE);
+
+		JButton back = new JButton("Back");
+		back.setSize(350, 35);
+		back.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+		back.setBackground(Color.WHITE);
+		back.setForeground(Color.DARK_GRAY);
+		back.setBounds(800, 870, 350, 35);
+
+		if (combo_dest.getSelectedIndex() != 0) {
+			combo_dest.setSelectedIndex(0);
+		}
+
+		combo_dest.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String departure_select = (String) combo_dest
+						.getItemAt((Integer) combo_dest.getSelectedIndex());
+				Flight_Schedules_Departures ftn = new Flight_Schedules_Departures();
+				ftn.fetch_departures(departure_select);
+				if (combo_dest.getSelectedIndex() != 0) {
+					combo_source.setEnabled(false);
+					arrival_reset.setEnabled(false);
+				} else {
+					combo_source.setEnabled(true);
+					arrival_reset.setEnabled(true);
+				}
+			}
+		});
+		if (combo_source.getSelectedIndex() != 0) {
+			combo_source.setSelectedIndex(0);
+		}
+		combo_source.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String arrival_select = (String) combo_source
+						.getItemAt((Integer) combo_source.getSelectedIndex());
+				Flight_Schedules_Arrivals ctn = new Flight_Schedules_Arrivals();
+				ctn.fetch_arrivals(arrival_select);
+				if (combo_source.getSelectedIndex() != 0) {
+					combo_dest.setEnabled(false);
+					departure_reset.setEnabled(false);
+				} else {
+					combo_dest.setEnabled(true);
+					departure_reset.setEnabled(true);
+				}
+			}
+		});
+		arrival_reset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				combo_source.setSelectedIndex(0);
+				combo_dest.setEnabled(true);
+			}
+		});
+		departure_reset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				combo_dest.setSelectedIndex(0);
+				combo_source.setEnabled(true);
+			}
+		});
+		back.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				emirates_flight_schd.dispose();
+				Welcome_Visitor_Page wp = new Welcome_Visitor_Page();
+				wp.Welcome_Page();
+			}
+		});
+
+		emirates_flight_schd.add(arrivals);
+		emirates_flight_schd.add(departures);
+		emirates_flight_schd.add(back);
+		emirates_flight_schd.add(departure_reset);
+		emirates_flight_schd.add(combo_dest);
+		emirates_flight_schd.add(destination);
+		emirates_flight_schd.add(arrival_reset);
+		emirates_flight_schd.add(combo_source);
+		emirates_flight_schd.add(source);
+		emirates_flight_schd.add(flight);
+		emirates_flight_schd.add(schedule);
+		emirates_flight_schd.add(arrival_panel);
+		emirates_flight_schd.add(departure_panel);
+		emirates_flight_schd.add(logo);
+		emirates_flight_schd.add(img2);
+
+	}
+
+}

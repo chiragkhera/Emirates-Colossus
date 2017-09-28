@@ -1,0 +1,171 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class Update_Airline {
+	public void new_airline() {
+		final JFrame frameB = new JFrame();
+		frameB.setSize(711, 400);
+		frameB.setTitle("Emirates Colossus: Admin: Update Airline- Dubai International");
+		frameB.setLocationRelativeTo(null);
+		frameB.setVisible(true);
+
+		JLabel pic2 = new JLabel(new ImageIcon(
+				"D:/Users/ckhera/Desktop/Emirates/update.jpg"));
+		pic2.setSize(711, 400);
+		pic2.setBounds(0, 0, 711, 400);
+		pic2.setLayout(new FlowLayout());
+
+		JLabel existing_airline = new JLabel("Enter Airline's Existing Name:");
+		existing_airline.setSize(350, 30);
+		existing_airline.setForeground(Color.WHITE);
+		existing_airline.setBounds(25, 30, 350, 30);
+		existing_airline.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+
+		final JTextField old_name = new JTextField("");
+		old_name.setSize(350, 30);
+		old_name.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+		old_name.setForeground(Color.BLACK);
+		old_name.setBounds(25, 65, 350, 30);
+
+		JLabel new_airline = new JLabel("Enter Airline's New Name:");
+		new_airline.setSize(350, 30);
+		new_airline.setForeground(Color.WHITE);
+		new_airline.setBounds(25, 135, 350, 30);
+		new_airline.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+
+		final JTextField new_name = new JTextField("");
+		new_name.setSize(350, 30);
+		new_name.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+		new_name.setForeground(Color.BLACK);
+		new_name.setBounds(25, 170, 350, 30);
+
+		JButton update = new JButton("Update");
+		update.setSize(250, 30);
+		update.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		update.setForeground(Color.DARK_GRAY);
+		update.setBackground(Color.WHITE);
+		update.setBounds(50, 300, 250, 30);
+
+		JButton close = new JButton("Close");
+		close.setSize(250, 30);
+		close.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+		close.setForeground(Color.DARK_GRAY);
+		close.setBackground(Color.WHITE);
+		close.setBounds(411, 300, 250, 30);
+
+		update.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String old_airline_select = old_name.getText();
+				String new_airline_select = new_name.getText();
+				if ("".equals(old_airline_select)) {
+					JOptionPane.showMessageDialog(null,
+							"Please enter the existing Airline to update.",
+							"Error in Updation", JOptionPane.ERROR_MESSAGE);
+				} else if ("".equals(new_airline_select)) {
+					JOptionPane.showMessageDialog(null,
+							"Please enter the new Airline to be updated.",
+							"Error in Updation", JOptionPane.ERROR_MESSAGE);
+				} else if ("".equals(old_airline_select)
+						&& "".equals(new_airline_select)) {
+					JOptionPane.showMessageDialog(null,
+							"Mandatory fields cannot be left blank.",
+							"Error in Updation", JOptionPane.ERROR_MESSAGE);
+				} else {
+					try {
+						Class.forName("java.sql.Driver");
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					String UID = "root";
+					String PWD = "root";
+					String Comp_DB_URL = "jdbc:mysql://localhost/emirates?user="
+							+ UID + "&password=" + PWD;
+					try {
+						Connection conn = DriverManager
+								.getConnection(Comp_DB_URL);
+						Statement stmt = conn.createStatement();
+						String sql, sql1, sql2, sql3, sql4;
+						sql = "Update arr set airline='" + new_airline_select
+								+ "' where airline='" + old_airline_select
+								+ "';";
+						sql1 = "Update dep set airline='" + new_airline_select
+								+ "' where airline='" + old_airline_select
+								+ "';";
+						sql2 = "Update boarding set airline='"
+								+ new_airline_select + "' where airline='"
+								+ old_airline_select + "';";
+						sql3 = "Update meal set airline='" + new_airline_select
+								+ "' where airline='" + old_airline_select
+								+ "';";
+						sql4 = "Update transit set connect_airline='"
+								+ new_airline_select
+								+ "' where connect_airline='"
+								+ old_airline_select + "';";
+						int rs = stmt.executeUpdate(sql);
+						int rs1 = stmt.executeUpdate(sql1);
+						int rs2 = stmt.executeUpdate(sql2);
+						int rs3 = stmt.executeUpdate(sql3);
+						int rs4 = stmt.executeUpdate(sql4);
+						stmt.close();
+						conn.close();
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"'"
+												+ old_airline_select
+												+ "' has been succesfully updated to '"
+												+ new_airline_select
+												+ "'. \nThe relevant changes has been made to the Emirates database!",
+										"Successful Updation",
+										JOptionPane.INFORMATION_MESSAGE);
+						frameB.dispose();
+					} catch (SQLException e1) {
+
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null,
+								"Error in connecting with Emirates!",
+								"Error in Connectivity",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		close.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				frameB.dispose();
+			}
+		});
+
+		frameB.add(close);
+		frameB.add(update);
+		frameB.add(new_name);
+		frameB.add(new_airline);
+		frameB.add(old_name);
+		frameB.add(existing_airline);
+		frameB.add(pic2);
+
+	}
+}

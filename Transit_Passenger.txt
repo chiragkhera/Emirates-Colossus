@@ -1,0 +1,513 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+
+public class Transit_Passenger {
+public void transit(){
+	final JFrame emirates_trans_pass=new JFrame();
+	emirates_trans_pass.setSize(1920, 1080);
+	emirates_trans_pass.setLayout(null);
+	emirates_trans_pass.setVisible(true);
+	emirates_trans_pass.setTitle("Emirates: Transit Passengers- Dubai International");
+	emirates_trans_pass.setLocationRelativeTo(null);
+	
+	JLabel img10=new JLabel(new ImageIcon("D:/Users/ckhera/Desktop/Emirates/transit.jpg"));
+	img10.setSize(1920, 1080);
+	
+	JLabel transit=new JLabel("Transit Passengers");
+	transit.setSize(1500, 110);
+	transit.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 90));
+	transit.setBounds(20, 20, 1500, 110);
+	transit.setForeground(Color.DARK_GRAY);
+	
+	JLabel logo = new JLabel(new ImageIcon(
+			"D:/Users/ckhera/Desktop/Emirates/emirates_holo.gif"));
+	logo.setSize(200, 137);
+	logo.setBounds(1650, 850, 200, 137);
+	logo.setLayout(new FlowLayout());
+	
+	JLabel pnr=new JLabel("Passenger's PNR:");
+	pnr.setSize(250, 30);
+	pnr.setBounds(25, 160, 250, 30);
+	pnr.setForeground(Color.DARK_GRAY);
+	pnr.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+	
+	final JTextField pass_pnr=new JTextField("");
+	pass_pnr.setSize(300, 30);
+	pass_pnr.setBounds(400, 160, 300, 30);
+	pass_pnr.setForeground(Color.DARK_GRAY);
+	pass_pnr.setFont(new Font("Sansation Regular", Font.PLAIN, 25));
+	
+	final JButton connect=new JButton("Find Connectivity");
+	connect.setSize(350, 35);
+	connect.setForeground(Color.DARK_GRAY);
+	connect.setBackground(Color.WHITE);
+	connect.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	connect.setBounds(950, 160, 350, 35);
+	
+	final JLabel welcome=new JLabel();
+	welcome.setSize(650, 35);
+	welcome.setBounds(25, 215, 650, 35);
+	welcome.setForeground(Color.DARK_GRAY);
+	welcome.setFont(new Font("Sansation Regular", Font.BOLD, 32));
+	welcome.setVisible(false);
+	
+	JPanel connectivity=new JPanel();
+	connectivity.setBackground(new Color(0, 0, 0, 40));
+	connectivity.setSize(1880, 740);
+	connectivity.setBounds(20, 250, 1880, 740);
+	
+	final JLabel uae=new JLabel("United Arab Emirates");
+	uae.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 140));
+	uae.setSize(1700, 130);
+	uae.setForeground(Color.WHITE);
+	uae.setBounds(180, 540, 1700, 130);
+	
+	final JLabel dxb=new JLabel("Dubai International");
+	dxb.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 80));
+	dxb.setSize(1400, 90);
+	dxb.setForeground(Color.WHITE);
+	dxb.setBounds(570, 690, 1400, 90);
+	
+	final JButton back_pre=new JButton("Back");
+	back_pre.setSize(350, 35);
+	back_pre.setForeground(Color.DARK_GRAY);
+	back_pre.setBackground(Color.WHITE);
+	back_pre.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	back_pre.setBounds(815, 930, 350, 35);
+	
+	final JLabel source=new JLabel("Source:");
+	source.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	source.setSize(150, 30);
+	source.setForeground(Color.WHITE);
+	source.setBounds(25, 265, 150, 30);
+	source.setVisible(false);
+	
+	final JLabel arr_term=new JLabel("Arriving Terminal:");
+	arr_term.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	arr_term.setSize(250, 30);
+	arr_term.setForeground(Color.WHITE);
+	arr_term.setBounds(25, 315, 250, 30);
+	arr_term.setVisible(false);
+	
+	final JLabel connecting=new JLabel("Connecting Flight:");
+	connecting.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	connecting.setSize(250, 30);
+	connecting.setForeground(Color.WHITE);
+	connecting.setBounds(25, 365, 250, 30);
+	connecting.setVisible(false);
+	
+	final JLabel connect_info=new JLabel("Connecting Flight Information");
+	connect_info.setFont(new Font("Sansation Regular", Font.BOLD, 32));
+	connect_info.setSize(450, 35);
+	connect_info.setForeground(Color.DARK_GRAY);
+	connect_info.setBounds(40, 435, 450, 35);
+	connect_info.setVisible(false);
+	
+	final JPanel connect_panel=new JPanel();
+	connect_panel.setBackground(new Color(0, 0, 0, 90));
+	connect_panel.setSize(1850, 500);
+	connect_panel.setBounds(35, 470, 1850, 500);
+	connect_panel.setVisible(false);
+	
+	final JLabel dest=new JLabel("Destination:");
+	dest.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	dest.setSize(200, 30);
+	dest.setForeground(Color.WHITE);
+	dest.setBounds(40, 480, 200, 30);
+	dest.setVisible(false);
+	
+	final JLabel flight_no=new JLabel("Flight Number:");
+	flight_no.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	flight_no.setSize(250, 30);
+	flight_no.setForeground(Color.WHITE);
+	flight_no.setBounds(40, 530, 250, 30);
+	flight_no.setVisible(false);
+	
+	final JLabel airline=new JLabel("Airline:");
+	airline.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	airline.setSize(150, 30);
+	airline.setForeground(Color.WHITE);
+	airline.setBounds(40, 580, 150, 30);
+	airline.setVisible(false);
+	
+	final JLabel schd_dep=new JLabel("Flight Scheduled Departure:");
+	schd_dep.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	schd_dep.setSize(350, 30);
+	schd_dep.setForeground(Color.WHITE);
+	schd_dep.setBounds(40, 630, 350, 30);
+	schd_dep.setVisible(false);
+	
+	final JLabel exp_dep=new JLabel("Flight Expected Departure:");
+	exp_dep.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	exp_dep.setSize(350, 30);
+	exp_dep.setForeground(Color.WHITE);
+	exp_dep.setBounds(40, 680, 350, 30);
+	exp_dep.setVisible(false);
+	
+
+	final JLabel delay=new JLabel("Delay in Departure:");
+	delay.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	delay.setSize(300, 30);
+	delay.setForeground(Color.WHITE);
+	delay.setBounds(40, 730, 300, 30);
+	delay.setVisible(false);
+	
+
+	final JLabel dep_term=new JLabel("Departing Terminal:");
+	dep_term.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	dep_term.setSize(250, 30);
+	dep_term.setForeground(Color.WHITE);
+	dep_term.setBounds(40, 780, 250, 30);
+	dep_term.setVisible(false);
+	
+
+	final JLabel dep_gate=new JLabel("Departure Gate:");
+	dep_gate.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	dep_gate.setSize(250, 30);
+	dep_gate.setForeground(Color.WHITE);
+	dep_gate.setBounds(40, 830, 250, 30);
+	dep_gate.setVisible(false);
+	
+	final JLabel dep_gate_time=new JLabel("Departure Gate Closing Time:");
+	dep_gate_time.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	dep_gate_time.setSize(360, 30);
+	dep_gate_time.setForeground(Color.WHITE);
+	dep_gate_time.setBounds(40, 880, 360, 30);
+	dep_gate_time.setVisible(false);
+	
+	final JLabel status=new JLabel("Status:");
+	status.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	status.setSize(150, 30);
+	status.setForeground(Color.WHITE);
+	status.setBounds(40, 930, 150, 30);
+	status.setVisible(false);
+	
+	final JButton reset=new JButton("Reset");
+	reset.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+	reset.setSize(350, 35);
+	reset.setForeground(Color.DARK_GRAY);
+	reset.setBounds(420, 975, 350, 35);
+	reset.setVisible(false);
+	
+	final JButton back=new JButton("Back");
+	back.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+	back.setSize(350, 35);
+	back.setForeground(Color.DARK_GRAY);
+	back.setBounds(1150, 975, 350, 35);
+	back.setVisible(false);
+	
+	final JLabel source_select=new JLabel();
+	source_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	source_select.setSize(600, 30);
+	source_select.setForeground(Color.WHITE);
+	source_select.setBounds(350, 265, 600, 30);
+	source_select.setVisible(false);
+	
+	final JLabel arr_term_select=new JLabel();
+	arr_term_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	arr_term_select.setSize(500, 30);
+	arr_term_select.setForeground(Color.WHITE);
+	arr_term_select.setBounds(350, 315, 500, 30);
+	arr_term_select.setVisible(false);
+	
+	final JLabel connecting_select=new JLabel();
+	connecting_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	connecting_select.setSize(100, 30);
+	connecting_select.setForeground(Color.WHITE);
+	connecting_select.setBounds(350, 365, 100, 30);
+	source_select.setVisible(false);
+	
+	final JLabel dest_select=new JLabel();
+	dest_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	dest_select.setSize(600, 30);
+	dest_select.setForeground(Color.WHITE);
+	dest_select.setBounds(500, 480, 600, 30);
+	dest_select.setVisible(false);
+	
+	final JLabel flight_no_select=new JLabel();
+	flight_no_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	flight_no_select.setSize(300, 30);
+	flight_no_select.setForeground(Color.WHITE);
+	flight_no_select.setBounds(500, 530, 300, 30);
+	flight_no_select.setVisible(false);
+	
+	final JLabel airline_select=new JLabel();
+	airline_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	airline_select.setSize(400, 30);
+	airline_select.setForeground(Color.WHITE);
+	airline_select.setBounds(500, 580, 400, 30);
+	airline_select.setVisible(false);
+	
+	final JLabel schd_dep_select=new JLabel();
+	schd_dep_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	schd_dep_select.setSize(300, 30);
+	schd_dep_select.setForeground(Color.WHITE);
+	schd_dep_select.setBounds(500, 630, 300, 30);
+	schd_dep_select.setVisible(false);
+	
+	final JLabel exp_dep_select=new JLabel();
+	exp_dep_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	exp_dep_select.setSize(300, 30);
+	exp_dep_select.setForeground(Color.WHITE);
+	exp_dep_select.setBounds(500, 680, 300, 30);
+	exp_dep_select.setVisible(false);
+	
+	final JLabel delay_select=new JLabel();
+	delay_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	delay_select.setSize(300, 30);
+	delay_select.setForeground(Color.WHITE);
+	delay_select.setBounds(500, 730, 300, 30);
+	delay_select.setVisible(false);
+	
+	final JLabel dep_term_select=new JLabel();
+	dep_term_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	dep_term_select.setSize(600, 30);
+	dep_term_select.setForeground(Color.WHITE);
+	dep_term_select.setBounds(500, 780, 600, 30);
+	dep_term_select.setVisible(false);
+	
+	final JLabel dep_gate_select=new JLabel();
+	dep_gate_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	dep_gate_select.setSize(150, 30);
+	dep_gate_select.setForeground(Color.WHITE);
+	dep_gate_select.setBounds(500, 830, 150, 30);
+	dep_gate_select.setVisible(false);
+	
+	final JLabel dep_gate_time_select=new JLabel();
+	dep_gate_time_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	dep_gate_time_select.setSize(300, 30);
+	dep_gate_time_select.setForeground(Color.WHITE);
+	dep_gate_time_select.setBounds(500, 880, 300, 30);
+	dep_gate_time_select.setVisible(false);
+	
+	final JLabel status_select=new JLabel();
+	status_select.setFont(new Font("Sansation Regular", Font.BOLD, 22));
+	status_select.setSize(400, 30);
+	status_select.setForeground(Color.WHITE);
+	status_select.setBounds(500, 930, 400, 30);
+	status_select.setVisible(false);
+	
+	connect.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String pass_pnr_select=pass_pnr.getText();
+			if("EK1087ATIN".equalsIgnoreCase(pass_pnr_select) || "EK1252VIID".equalsIgnoreCase(pass_pnr_select) || "NL7674HAIN".equalsIgnoreCase(pass_pnr_select) || "SJ9177SYKS".equalsIgnoreCase(pass_pnr_select) || "FZ1473QUAL".equalsIgnoreCase(pass_pnr_select)){
+			
+			status_select.setVisible(true);
+			dep_gate_time_select.setVisible(true);
+			dep_gate_select.setVisible(true);
+			dep_term_select.setVisible(true);
+			delay_select.setVisible(true);
+			exp_dep_select.setVisible(true);
+			schd_dep_select.setVisible(true);
+			airline_select.setVisible(true);
+			flight_no_select.setVisible(true);
+			dest_select.setVisible(true);
+			connecting_select.setVisible(true);
+			arr_term_select.setVisible(true);
+			source_select.setVisible(true);
+			back.setVisible(true);
+			reset.setVisible(true);
+			status.setVisible(true);
+			dep_gate_time.setVisible(true);
+			dep_gate.setVisible(true);
+			dep_term.setVisible(true);
+			delay.setVisible(true);
+			exp_dep.setVisible(true);
+			schd_dep.setVisible(true);
+			airline.setVisible(true);
+			flight_no.setVisible(true);
+			dest.setVisible(true);
+			connect_panel.setVisible(true);
+			connect_info.setVisible(true);
+			connecting.setVisible(true);
+			arr_term.setVisible(true);
+			source.setVisible(true);
+			welcome.setVisible(true);
+			dxb.setVisible(false);
+			uae.setVisible(false);
+			pass_pnr.setEditable(false);
+			connect.setEnabled(false);
+			back_pre.setVisible(false);
+			
+			try {
+				Class.forName("java.sql.Driver");
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String UID="root";
+			String PWD="root";
+			String Comp_DB_URL="jdbc:mysql://localhost/emirates?user="+UID+"&password="+PWD;
+		 	try{
+					Connection conn=DriverManager.getConnection(Comp_DB_URL);
+					Statement stmt=conn.createStatement();
+					String sql;
+					sql="Select * from transit;";
+					ResultSet rs=stmt.executeQuery(sql);
+					while(rs.next()){
+					welcome.setText("Welcome "+rs.getString("pass_name")+",");
+					source_select.setText(rs.getString("source"));
+					arr_term_select.setText(rs.getString("arriving_terminal"));
+					connecting_select.setText(rs.getString("connecting"));
+					dest_select.setText(rs.getString("final_destination"));
+					flight_no_select.setText(rs.getString("connect_flight_no"));
+					airline_select.setText(rs.getString("connect_airline"));
+					schd_dep_select.setText(rs.getString("connect_schd_dep"));
+					exp_dep_select.setText(rs.getString("connect_exp_dep"));
+					delay_select.setText(rs.getString("connect_delay_dep"));
+					dep_term_select.setText(rs.getString("connect_terminal"));
+					dep_gate_select.setText(rs.getString("connect_gate"));
+					dep_gate_time_select.setText(rs.getString("connect_gate_close"));
+					status_select.setText(rs.getString("connect_status"));
+					}
+					JOptionPane.showMessageDialog(null, "Sucessfully connected with Emirates!", "Success", JOptionPane.INFORMATION_MESSAGE);
+					rs.close();
+					stmt.close();
+					conn.close();
+		 	}
+		 	
+		 	catch (SQLException e1) {
+				
+				// TODO Auto-generated catch block
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error in connecting with Emirates!", "Error in Connectivity!", JOptionPane.ERROR_MESSAGE);				
+			}
+			}
+			else if("".equals(pass_pnr_select))
+			JOptionPane.showMessageDialog(null, "Please enter the Passenger's PNR!", "Error", JOptionPane.ERROR_MESSAGE);	
+			else
+			JOptionPane.showMessageDialog(null, "Please enter a valid PNR! \nThis PNR does not seems to have a connecting Flight!", "Error", JOptionPane.ERROR_MESSAGE);	
+			}
+	});
+	
+	reset.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			status_select.setVisible(false);
+			dep_gate_time_select.setVisible(false);
+			dep_gate_select.setVisible(false);
+			dep_term_select.setVisible(false);
+			delay_select.setVisible(false);
+			exp_dep_select.setVisible(false);
+			schd_dep_select.setVisible(false);
+			airline_select.setVisible(false);
+			flight_no_select.setVisible(false);
+			dest_select.setVisible(false);
+			connecting_select.setVisible(false);
+			arr_term_select.setVisible(false);
+			source_select.setVisible(false);
+			back.setVisible(false);
+			reset.setVisible(false);
+			status.setVisible(false);
+			dep_gate_time.setVisible(false);
+			dep_gate.setVisible(false);
+			dep_term.setVisible(false);
+			delay.setVisible(false);
+			exp_dep.setVisible(false);
+			schd_dep.setVisible(false);
+			airline.setVisible(false);
+			flight_no.setVisible(false);
+			dest.setVisible(false);
+			connect_panel.setVisible(false);
+			connect_info.setVisible(false);
+			connecting.setVisible(false);
+			arr_term.setVisible(false);
+			source.setVisible(false);
+			welcome.setVisible(false);
+			dxb.setVisible(true);
+			uae.setVisible(true);
+			pass_pnr.setText("");
+			pass_pnr.setEditable(true);
+			connect.setEnabled(true);
+			emirates_trans_pass.dispose();
+			Transit_Passenger tr_pass=new Transit_Passenger();
+			tr_pass.transit();
+		}
+	});
+	
+	back.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			emirates_trans_pass.dispose();
+			Welcome_Visitor_Page wp=new Welcome_Visitor_Page();
+			wp.Welcome_Page();
+		}
+	});
+	
+	back_pre.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			emirates_trans_pass.dispose();
+			Welcome_Visitor_Page wp=new Welcome_Visitor_Page();
+			wp.Welcome_Page();
+		}
+	});
+	emirates_trans_pass.add(status_select);
+	emirates_trans_pass.add(dep_gate_time_select);
+	emirates_trans_pass.add(dep_gate_select);
+	emirates_trans_pass.add(dep_term_select);
+	emirates_trans_pass.add(delay_select);
+	emirates_trans_pass.add(exp_dep_select);
+	emirates_trans_pass.add(schd_dep_select);
+	emirates_trans_pass.add(airline_select);
+	emirates_trans_pass.add(flight_no_select);
+	emirates_trans_pass.add(dest_select);
+	emirates_trans_pass.add(connecting_select);
+	emirates_trans_pass.add(arr_term_select);
+	emirates_trans_pass.add(source_select);
+	emirates_trans_pass.add(back);
+	emirates_trans_pass.add(reset);
+	emirates_trans_pass.add(status);
+	emirates_trans_pass.add(dep_gate_time);
+	emirates_trans_pass.add(dep_gate);
+	emirates_trans_pass.add(dep_term);
+	emirates_trans_pass.add(delay);
+	emirates_trans_pass.add(exp_dep);
+	emirates_trans_pass.add(schd_dep);
+	emirates_trans_pass.add(airline);
+	emirates_trans_pass.add(flight_no);
+	emirates_trans_pass.add(dest);
+	emirates_trans_pass.add(connect_panel);
+	emirates_trans_pass.add(connect_info);
+	emirates_trans_pass.add(connecting);
+	emirates_trans_pass.add(arr_term);
+	emirates_trans_pass.add(source);
+	emirates_trans_pass.add(back_pre);
+	emirates_trans_pass.add(dxb);
+	emirates_trans_pass.add(uae);
+	emirates_trans_pass.add(connectivity);
+	emirates_trans_pass.add(welcome);
+	emirates_trans_pass.add(connect);
+	emirates_trans_pass.add(pass_pnr);
+	emirates_trans_pass.add(pnr);
+	emirates_trans_pass.add(logo);
+	emirates_trans_pass.add(transit);
+	emirates_trans_pass.add(img10);
+}
+}

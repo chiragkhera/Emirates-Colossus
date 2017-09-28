@@ -1,0 +1,116 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+
+public class Runway_Video extends javax.swing.JPanel{
+public void emirates_live(){	
+	final JFrame emi_runway_live=new JFrame();
+	emi_runway_live.setSize(1920, 1080);
+	emi_runway_live.setLayout(null);
+	emi_runway_live.setVisible(true);
+	emi_runway_live.setTitle("Emirates: Live Runways- Dubai International");
+	emi_runway_live.setLocationRelativeTo(null);
+	
+	JLabel img10=new JLabel(new ImageIcon("D:/Users/ckhera/Desktop/Emirates/boeing.jpg"));
+	img10.setSize(1920, 1080);
+	
+	JLabel live=new JLabel("Dubai International Live Runways");
+	live.setSize(1800, 110);
+	live.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 85));
+	live.setBounds(20, 20, 1800, 110);
+	live.setForeground(Color.DARK_GRAY);
+	
+	JLabel logo = new JLabel(new ImageIcon(
+			"D:/Users/ckhera/Desktop/Emirates/emirates_holo.gif"));
+	logo.setSize(200, 137);
+	logo.setBounds(1650, 850, 200, 137);
+	logo.setLayout(new FlowLayout());
+	
+	JButton start=new JButton("Start the video");
+	start.setBackground(Color.WHITE);
+	start.setForeground(Color.DARK_GRAY);
+	start.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	start.setSize(300, 30);
+	start.setBounds(25, 130, 300, 30);
+	
+	JPanel live_panel=new JPanel();
+	live_panel.setBackground(new Color(0, 0, 0, 50));
+	live_panel.setSize(1880, 765);
+	live_panel.setBounds(20, 175, 1880, 765);
+	
+	final JLabel uae = new JLabel("United Arab Emirates");
+	uae.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 140));
+	uae.setSize(1700, 130);
+	uae.setForeground(Color.WHITE);
+	uae.setBounds(180, 550, 1700, 130);
+
+	final JLabel dxb = new JLabel("Dubai International");
+	dxb.setFont(new Font("Fertigo Pro Regular", Font.BOLD, 80));
+	dxb.setSize(1400, 90);
+	dxb.setForeground(Color.WHITE);
+	dxb.setBounds(570, 700, 1400, 90);
+	
+	start.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			try {
+				live();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	});
+	
+	JButton back=new JButton("Back");
+	back.setFont(new Font("Sansation Regular", Font.BOLD, 30));
+	back.setSize(350, 35);
+	back.setForeground(Color.DARK_GRAY);
+	back.setBounds(765, 975, 350, 35);
+	back.setBackground(Color.WHITE);
+	
+	back.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		emi_runway_live.dispose();
+		Welcome_Visitor_Page wp=new Welcome_Visitor_Page();
+		wp.Welcome_Page();
+		}
+	});
+	
+	emi_runway_live.add(back);
+	emi_runway_live.add(dxb);
+	emi_runway_live.add(uae);
+	emi_runway_live.add(start);
+	emi_runway_live.add(live_panel);
+	emi_runway_live.add(logo);
+	emi_runway_live.add(live);
+	emi_runway_live.add(img10);
+}
+
+public static void live() throws Exception {
+	Desktop.getDesktop().open(new File("D:/Users/ckhera/Desktop/Emirates/Dubai_International_Live_Runways.mp4"));
+}
+
+}

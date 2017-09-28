@@ -1,0 +1,140 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+
+public class Update_PNR {
+public void new_pnr(){
+	final JFrame frameE=new JFrame();
+	frameE.setSize(711, 400);
+	frameE.setTitle("Emirates Colossus: Admin: Update PNR- Dubai International");
+	frameE.setLocationRelativeTo(null);
+	frameE.setVisible(true);
+	
+	JLabel pic5=new JLabel(new ImageIcon("D:/Users/ckhera/Desktop/Emirates/update.jpg"));
+	pic5.setSize(711, 400);
+	pic5.setBounds(0, 0, 711, 400);
+	pic5.setLayout(new FlowLayout());
+	
+	JLabel existing_pnr=new JLabel("Enter Existing PNR:");
+	existing_pnr.setSize(300, 30);
+	existing_pnr.setForeground(Color.WHITE);
+	existing_pnr.setBounds(25, 30, 300, 30);
+	existing_pnr.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	final JTextField old_pnr=new JTextField("");
+	old_pnr.setSize(300, 30);  
+	old_pnr.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	old_pnr.setForeground(Color.BLACK);
+	old_pnr.setBounds(25, 65, 300, 30);
+	
+	JLabel update_pnr=new JLabel("Enter New PNR:");
+	update_pnr.setSize(300, 30);
+	update_pnr.setForeground(Color.WHITE);
+	update_pnr.setBounds(25, 135, 300, 30);
+	update_pnr.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	
+	final JTextField new_pnr=new JTextField("");
+	new_pnr.setSize(300, 30);  
+	new_pnr.setFont(new Font("Sansation Regular", Font.PLAIN, 18));
+	new_pnr.setForeground(Color.BLACK);
+	new_pnr.setBounds(25, 170, 300, 30);
+	
+	JButton update=new JButton("Update");
+	update.setSize(250, 30);  
+	update.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	update.setForeground(Color.DARK_GRAY);
+	update.setBackground(Color.WHITE);
+	update.setBounds(50, 300, 250, 30);
+	
+	JButton close=new JButton("Close");
+	close.setSize(250, 30);  
+	close.setFont(new Font("Sansation Regular", Font.BOLD, 25));
+	close.setForeground(Color.DARK_GRAY);
+	close.setBackground(Color.WHITE);
+	close.setBounds(411, 300, 250, 30);
+	
+	close.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			frameE.dispose();
+		}
+	});
+	
+	update.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+		String old_pnr_select=old_pnr.getText();	
+		String new_pnr_select=new_pnr.getText();
+		if ("".equals(old_pnr)){
+		JOptionPane.showMessageDialog(null, "Please enter the existing PNR to update.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+		}
+		else if("".equals(new_pnr)){
+		JOptionPane.showMessageDialog(null, "Please enter the new PNR to be updated.", "Error in Updation", JOptionPane.ERROR_MESSAGE);
+		}
+		else if("".equals(old_pnr) && "".equals(new_pnr)){
+		JOptionPane.showMessageDialog(null, "Mandatory fields cannot be left blank.", "Error in Updation", JOptionPane.ERROR_MESSAGE);	
+		}
+		else{
+		try {
+			Class.forName("java.sql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String UID="root";
+		String PWD="root";
+		String Comp_DB_URL="jdbc:mysql://localhost/emirates?user="+UID+"&password="+PWD;
+	 	try{
+				Connection conn=DriverManager.getConnection(Comp_DB_URL);
+				Statement stmt=conn.createStatement();
+				String sql, sql1, sql2, sql3;
+				sql="Update transit set pnr='"+new_pnr_select+"' where pnr='"+old_pnr_select+"';";
+				sql1="Update dep set pnr='"+new_pnr_select+"' where pnr='"+old_pnr_select+"';";
+				sql2="Update boarding set pnr='"+new_pnr_select+"' where pnr='"+old_pnr_select+"';";
+				sql3="Update meal set pnr='"+new_pnr_select+"' where pnr='"+old_pnr_select+"';";
+				int rs=stmt.executeUpdate(sql);	
+				int rs1=stmt.executeUpdate(sql1);
+				int rs2=stmt.executeUpdate(sql2);
+				int rs3=stmt.executeUpdate(sql3);
+				stmt.close();
+				conn.close();
+				JOptionPane.showMessageDialog(null, "'"+old_pnr_select+"' has been succesfully updated to '"+new_pnr_select+"'. \nThe relevant changes has been made to the Emirates database!", "Successful Updation", JOptionPane.INFORMATION_MESSAGE);		
+				frameE.dispose();
+	 	}
+	 	catch (SQLException e1) {
+			
+			// TODO Auto-generated catch block
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error in connecting with Emirates!", "Error in Connectivity", JOptionPane.ERROR_MESSAGE);				
+		}
+		}
+		}
+	});
+
+	frameE.add(close);	
+	frameE.add(update);
+	frameE.add(new_pnr);
+	frameE.add(update_pnr);
+	frameE.add(old_pnr);
+	frameE.add(existing_pnr);
+	frameE.add(pic5);
+}
+}
